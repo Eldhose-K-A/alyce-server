@@ -16,6 +16,7 @@ var socketEvents = (server, session) => {
 
     io.on('connection',function(socket){
         console.info(`Socket ${socket.id} has connected.`);
+        io.emit("sub-servers-and-clients-status",{"clients": clientList.size, "P1_instances": serverListPhaseI.size, "P2_instances": serverListPhaseII.size, "P3_instances": serverListPhaseIII.size});
 
         socket.on("client-ready",(data) =>{
             clientList.add(socket.id);
