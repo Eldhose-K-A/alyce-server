@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample page</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Active Clients</td><td> : </td><td><span id="clist"></span></td>
+    </tr>
+    <tr>
+        <td>Active P1 Instances</td><td> : </td><td><span id="plist1"></span></td>
+    </tr>
+    <tr>
+        <td>Active P2 Instances</td><td> : </td><td><span id="plist2"></span></td>
+    </tr>
+    <tr>
+        <td>Active P3 Instances</td><td> : </td><td><span id="plist3"></span></td>
+    </tr>
+</table>
+<br/>
+<hr/>
+<textarea id="input_story" rows="10" style="width: 90vw;"></textarea>
+<br/>
+<input type="button" id="submit_input_story" value="Submit 1"/>
+<br/>
+<input type="button" id="submit_input_story2" value="Submit 2"/>
+<br/>
+<div id="re"></div>
+
+<!-- this link is magically provided by socket.io -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    window.onload = function(){
+        var story_input = document.getElementById("input_story");
+        var story_input_button = document.getElementById("submit_input_story");
+        var story_input_button2 = document.getElementById("submit_input_story2");
+        var result = document.getElementById("re");
+
+        const socket = io();
+        socket.on("connect", () => {
+            socket.emit("client-ready", "");
+            story_input_button.onclick = function(){
+                let in_data = story_input.value;
+                if(in_data!=""){
+                    socket.emit("client-to-server",{"phase": 1, "input": in_data});
+                }
+                else{
+                    window.alert("No Input Data!...");
+                }
+            }
+            story_input_button2.onclick = function(){
+                let in_data = JSON.parse(story_input.value);
+                if(in_data!=undefined){
+                    socket.emit("client-to-server",{"phase": 2, "input": in_data.output});
+                }
+                else{
+                    window.alert("No Input Data!...");
+                }
+            }
+        });
+
+        socket.on("server-to-client",function(data){
+            result.innerHTML = result.innerHTML + "<br/>---<br/>" + story_input.value;
+            story_input.value = JSON.stringify(data);
+        });
+
+        socket.on("sub-servers-and-clients-status",function(data){
+            var c1 = document.getElementById("clist");
+            var p1 = document.getElementById("plist1");
+            var p2 = document.getElementById("plist2");
+            var p3 = document.getElementById("plist3");
+            c1.innerHTML = data.clients;
+            p1.innerHTML = data.P1_instances;
+            p2.innerHTML = data.P2_instances;
+            p3.innerHTML = data.P3_instances;
+            if(data.P1_instances<1)
+                p1.style.color = "red";
+            else
+                p1.style.color = "green";
+            if(data.P2_instances<1)
+                p2.style.color = "red";
+            else
+                p2.style.color = "green";
+            if(data.P3_instances<1)
+                p3.style.color = "red";
+            else
+                p3.style.color = "green";
+        });
+    }
+</script>
+</body>
+</html>
