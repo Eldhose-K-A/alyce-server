@@ -51,7 +51,7 @@ var socketEvents = (server, session) => {
             else if(serverListPhaseII.has(socket.id)){
                 if(serverListPhaseII.values().next().value==socket.id){
                     console.log(`Current Phase 2 Server has gone Offline!.....`);
-                    io.emit("server-to-client",{"error": true, "errormsg": "Current Phase 1 sub serever has gone offline!...", "phase": 2});
+                    io.emit("server-to-client",{"error": true, "errormsg": "Current Phase 2 sub serever has gone offline!...", "phase": 2});
                 }
                 serverListPhaseII.delete(socket.id);
                 console.info(`A Server of Phase 2 ${socket.id} has disconnected.`);
@@ -59,7 +59,7 @@ var socketEvents = (server, session) => {
             else if(serverListPhaseIII.has(socket.id)){
                 if(serverListPhaseIII.values().next().value==socket.id){
                     console.log(`Current Phase 3 Server has gone Offline!.....`);
-                    io.emit("server-to-client",{"error": true, "errormsg": "Current Phase 1 sub serever has gone offline!...", "phase": 3});
+                    io.emit("server-to-client",{"error": true, "errormsg": "Current Phase 3 sub serever has gone offline!...", "phase": 3});
                 }
                 serverListPhaseIII.delete(socket.id);
                 console.info(`A Server of Phase 3 ${socket.id} has disconnected.`);
