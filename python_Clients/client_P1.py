@@ -7,7 +7,7 @@ sio = socketio.Client()
 def workHandler(input_data):
 	sio.emit('phase-1-server-to-main-server',{"client": input_data["client"], "procedureNo": input_data["procedureNo"], "status": "STARTED", "output": json.dumps([["None"]])})
 	output_data = [[y.strip() for y in x.split("$")] for x in input_data["input"].split("#")]
-	sio.sleep(30);
+	sio.sleep(30)
 	sio.emit('phase-1-server-to-main-server',{"client": input_data["client"], "procedureNo": input_data["procedureNo"], "status": "COMPLETED", "output": json.dumps(output_data)})
 
 @sio.on('main-server-to-phase-1-server')

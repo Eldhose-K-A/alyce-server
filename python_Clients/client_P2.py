@@ -11,7 +11,7 @@ def workHandler(input_data):
 		for j in i:
 			print("--->",j)
 		print("--")
-	sio.sleep(30);
+	sio.sleep(30)
 	sio.emit('phase-2-server-to-main-server',{"client": input_data["client"], "procedureNo": input_data["procedureNo"], "status": "COMPLETED", "output": json.dumps(story_list)})
 
 @sio.on('main-server-to-phase-2-server')
