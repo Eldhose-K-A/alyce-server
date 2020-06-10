@@ -68,7 +68,7 @@
             story_input_button3.onclick = function(){
                 let in_data = JSON.parse(story_input.value);
                 if(in_data!=undefined){
-                    socket.emit("client-to-server",{"phase": 2, "procedureNo": 1, "input": in_data.output[1]});
+                    socket.emit("client-to-server",{"phase": 2, "procedureNo": 1, "input": []});
                 }
                 else{
                     window.alert("No Input Data!...");
