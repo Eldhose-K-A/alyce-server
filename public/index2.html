@@ -27,6 +27,8 @@
 <br/>
 <input type="button" id="submit_input_story2" value="Submit 2"/>
 <br/>
+<input type="button" id="submit_input_story3" value="Submit 3"/>
+<br/>
 <div id="re"></div>
 
 <!-- this link is magically provided by socket.io -->
@@ -36,6 +38,8 @@
         var story_input = document.getElementById("input_story");
         var story_input_button = document.getElementById("submit_input_story");
         var story_input_button2 = document.getElementById("submit_input_story2");
+        var story_input_button3 = document.getElementById("submit_input_story3");
+		var story_input_button4 = document.getElementById("submit_input_story4");
         var result = document.getElementById("re");
 
         const socket = io();
@@ -54,6 +58,15 @@
                 let in_data = JSON.parse(story_input.value);
                 if(in_data!=undefined){
                     socket.emit("client-to-server",{"phase": 2, "procedureNo": 0, "input": in_data.output});
+                }
+                else{
+                    window.alert("No Input Data!...");
+                }
+            }
+            story_input_button3.onclick = function(){
+                let in_data = JSON.parse(story_input.value);
+                if(in_data!=undefined){
+                    socket.emit("client-to-server",{"phase": 2, "procedureNo": 1, "input": in_data.output[1]});
                 }
                 else{
                     window.alert("No Input Data!...");
