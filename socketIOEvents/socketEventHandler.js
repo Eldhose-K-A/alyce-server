@@ -1,5 +1,6 @@
 var socketio = require("socket.io");
 var sharedsession = require("express-socket.io-session");
+var fs = require('fs');
 
 var socketEvents = (server, session) => {
 
@@ -129,6 +130,15 @@ var socketEvents = (server, session) => {
                 return;
             }
             io.to(data.client).emit("server-to-client",{"error": false, "errormsg": "", "phase": 3, "procedureNo": data.procedureNo, "status": data.status, "output": JSON.parse(data.output)});
+        });
+		
+		socket.on("phase-3-server-to-main-server-file-ready", function (data) {
+            let encodedData = JSON.parse(data.output);
+            let buff = Buffer.from(encodedData, 'base64');
+            fs.writeFile("./public/audio/"+data.filename, buff, function (err) {
+              if (err) return console.log(err);
+                console.log("File Creation Successfull -> ./public/audio/"+data.filename);
+            });
         });
 
     });
