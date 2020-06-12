@@ -134,9 +134,7 @@
   <script>
     $(document).ready(function () {
       $("body").removeClass('loader');
-      var curphase = 0;
-      var storyList;
-      tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-completed', {
+      /*tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-completed', {
         content: 'Completed',
         placement: 'top'
       })
@@ -147,7 +145,7 @@
       tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-pending', {
         content: 'Pending',
         placement: 'top'
-      })
+      })*/
 
       $("#story_fetch_button").click(function(){
         $.ajax({url: "/story/story01.txt", success: function(result){
