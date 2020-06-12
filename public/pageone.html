@@ -63,7 +63,7 @@
       <h1>Process Overview</h1>
       <div class="paragraph__timeline">
         <div class="paragraph__timeline__container">
-          <div id="phase00" class="paragraph__timeline__entry --entry-1 --is-completed">
+          <div id="phase00" class="paragraph__timeline__entry --entry-1 --is-pending">
             <span></span>
             <div class="paragraph__timeline__content-container">
               <div class="paragraph__timeline__content">
@@ -77,7 +77,7 @@
               </div>
             </div>
           </div>
-          <div id="phase01" class="paragraph__timeline__entry --entry-1 --is-inprogress">
+          <div id="phase01" class="paragraph__timeline__entry --entry-1 --is-pending">
             <span></span>
             <div class="paragraph__timeline__content-container">
               <div class="paragraph__timeline__content">
@@ -169,6 +169,8 @@
     var call_phase_2_step_1 = undefined;
     var call_phase_2_step_2 = undefined;
     var call_phase_3_step_1 = undefined;
+    var timeline_label = [document.getElementById("phase00"), document.getElementById("phase01"), document.getElementById("phase02"), document.getElementById("phase03")];
+    var timeline_content = [document.getElementById("progress_indicator_0"), document.getElementById("progress_indicator_1"), document.getElementById("progress_indicator_2"), document.getElementById("progress_indicator_3")];
 
     // Code to Set the Tool tip of Timeline correctly
     function re_initialize_timeline() {
@@ -309,6 +311,8 @@
         socket.emit("client-ready", "");
 
         call_phase_1_step_1 = function () {
+          timeline_label[0].classList.remove("--is-pending");
+          timeline_label[0].classList.add("--is-inprogress");
           socket.emit("client-to-server", {
             "phase": 1,
             "procedureNo": 0,
@@ -361,9 +365,15 @@
         if (data.phase == 1 && data.status == "STARTED") {
           current_phase = 1;
           current_data_server = 1;
+          timeline_label[0].classList.remove("--is-inprogress");
+          timeline_label[0].classList.add("--is-completed");
+          timeline_label[1].classList.remove("--is-pending");
+          timeline_label[1].classList.add("--is-inprogress");
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Started</b>";
         } else if (data.phase == 1 && data.status == "COMPLETED") {
           current_data_server = 0;
+          timeline_label[1].classList.remove("--is-inprogress");
+          timeline_label[1].classList.add("--is-completed");
           story_list = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Completed</b><br/>" + JSON
             .stringify(data);
@@ -371,6 +381,8 @@
         } else if (data.phase == 2 && data.procedureNo == 0 && data.status == "STARTED") {
           current_phase = 2;
           current_data_server = 2;
+          timeline_label[2].classList.remove("--is-pending");
+          timeline_label[2].classList.add("--is-inprogress");
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.1 Started</b>";
         } else if (data.phase == 2 && data.procedureNo == 0 && data.status == "COMPLETED") {
           current_data_server = 0;
@@ -402,6 +414,8 @@
               .length -
               1) + ")\" /> " + data.output[0][1];
           } else {
+            timeline_label[2].classList.remove("--is-inprogress");
+            timeline_label[2].classList.add("--is-completed");
             for (i = 0; i < data.output.length; ++i) {
               if (data.output[i][1] != "") {
                 story_list[data.output[i][0]][0] = data.output[i][1];
@@ -416,10 +430,14 @@
           }
         } else if (data.phase == 3 && data.status == "STARTED") {
           current_phase = 3;
+          timeline_label[3].classList.remove("--is-pending");
+          timeline_label[3].classList.add("--is-inprogress");
           current_data_server = 3;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Started</b>";
         } else if (data.phase == 3 && data.status == "COMPLETED") {
           current_data_server = 0;
+          timeline_label[3].classList.remove("--is-inprogress");
+          timeline_label[3].classList.add("--is-completed");
           audio_file_names = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Completed</b>";
           write_screenplay_with_audio();
