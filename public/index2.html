@@ -10,6 +10,8 @@
     <input type="button" id="submit_input_story" value="Submit 1"/>
     <br/>
     <div id="result"></div>
+    <hr/>
+    <hr/>
     <div>
         <h2>REWRITE SECTION</h2>
         <div id="rewrite"></div>
@@ -23,6 +25,7 @@
     var rewrite_flag = false;
     var story = undefined;
     var story_list = undefined;
+    var sound_file_names = [];
     var plot_index_list = [];
     var current_plotwords = [];
     var current_phase = 0;
@@ -35,6 +38,7 @@
     var submit_button = document.getElementById("submit_input_story");
     var cp21 = undefined;
     var cp22 = undefined;
+    var cp31 = undefined;
 
     function check2(idval,pno){
         story_list[idval][0] = story_list[idval][3][pno];
@@ -61,6 +65,10 @@
 
     function writescreenplay(){
         re = "<hr/>";
+        document.getElementById("rewrite").innerHTML = "";
+        document.getElementById("rewrite1").innerHTML = "";
+        document.getElementById("rewrite2").innerHTML = "";
+
         sceneno = 1;
         if(story_list!=undefined){
             for(i=0;i<story_list.length;++i){
@@ -80,6 +88,7 @@
                     re = re + "<b>"+story_list[i][4]+" : </b>"+story_list[i][5];
                 }
             }
+            re = re + "<br/>&nbsp;<br/>&nbsp;<br/><button onclick=\"cp31()\">Generate Audio Transcript</button>";
         }
         document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + re;
     }
@@ -115,6 +124,10 @@
                 socket.emit("client-to-server",{"phase": 2, "procedureNo": 1, "input": current_plotwords});
             }
 
+            cp31 = function call_phase_3_step_1(){
+                socket.emit("client-to-server",{"phase": 3, "procedureNo": 0, "input": story_list});
+            }
+
             // To get Information regarding the no of active connections
             socket.on("sub-servers-and-clients-status",function(data){
                 active_clients = data.clients;
@@ -126,6 +139,10 @@
         });
 
         socket.on("server-to-client",function(data){
+            if(data.error==true){
+                window.alert("ERROR : "+data.errormsg);
+                return;
+            }
             if(data.phase==1 && data.status=="STARTED"){
                 current_phase = 1;
                 current_data_server = 1;
