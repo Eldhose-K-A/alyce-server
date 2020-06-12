@@ -132,26 +132,33 @@
   <script src="https://unpkg.com/tippy.js@4"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
+  
+	function re_initialize_timeline(){
+		tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-completed', {
+			content: 'Completed',
+			placement: 'top'
+		});
+		tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-inprogress', {
+			content: 'In Progress',
+			placement: 'top'
+		});
+		tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-pending', {
+			content: 'Pending',
+			placement: 'top'
+		});
+	}
+  
     $(document).ready(function () {
       $("body").removeClass('loader');
-      /*tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-completed', {
-        content: 'Completed',
-        placement: 'top'
-      })
-      tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-inprogress', {
-        content: 'In Progress',
-        placement: 'top'
-      })
-      tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-pending', {
-        content: 'Pending',
-        placement: 'top'
-      })*/
+      
+	  re_initialize_timeline();
 
       $("#story_fetch_button").click(function(){
         $.ajax({url: "/story/story01.txt", success: function(result){
           $("#story_input").html(result);
         }});
       });
+	  
     });
   </script>
 </body>
