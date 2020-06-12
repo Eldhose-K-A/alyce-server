@@ -37,7 +37,7 @@
     var cp22 = undefined;
 
     function check2(idval,pno){
-        story_list[idval][0] = story_list[idval][3][pno];
+        story_list[idval][0] = story_list[idval][2][pno];
         window.alert("Changed!...");
     }
 
@@ -50,7 +50,8 @@
     }
 
     function check(idval){
-        document.getElementById("rewrite").innerHTML = story_list[idval][1]+"br/>"+"<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite("+idval+")\" /><input type=\"button\" value=\"close\" onclick=\"writescreenplay()\"/>";
+        document.getElementById("rewrite").innerHTML = story_list[idval][0]+"<br/>"+"<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite("+idval+")\" /><input type=\"button\" value=\"close\" onclick=\"writescreenplay()\"/>";
+        document.getElementById("rewrite1").innerHTML = "";
         var re = "";
         for(i=story_list[idval][3].length-1;i>=0;--i){
             re = re + "<br/><input type=\"radio\" value=\""+i+"\" onclick=\"check2("+idval+","+i+")\" /> "+story_list[idval][3][i];
@@ -180,7 +181,7 @@
                 window.alert("Completed");*/
                 if(rewrite_flag==true){
                     story_list[data.output[0][0]][3].push(data.output[0][1]);
-                    document.getElementById("rewrite1").innerHTML = "<br/><input type=\"radio\" value=\""+(story_list[data.output[0][0]][3].length-1)+"\" onclick=\"check2("+data.output[0][0]+","+(story_list[data.output[0][0]][3].length-1)+")\" /> "+data.output[0][0];
+                    document.getElementById("rewrite1").innerHTML = "<br/><input type=\"radio\" value=\""+(story_list[data.output[0][0]][3].length-1)+"\" onclick=\"check2("+data.output[0][0]+","+(story_list[data.output[0][0]][3].length-1)+")\" /> "+data.output[0][1];
                 }
                 else{
                     for(i=0;i<data.output.length;++i){
