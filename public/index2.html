@@ -10,6 +10,11 @@
     <input type="button" id="submit_input_story" value="Submit 1"/>
     <br/>
     <div id="result"></div>
+    <div>
+        <h2>REWRITE SECTION</h2>
+        <div id="rewrite"></div>
+        <div class="rewrite2"></div>
+    </div>
 </body>
 </html>
 <script src="/socket.io/socket.io.js"></script>
@@ -29,8 +34,17 @@
     var cp21 = undefined;
     var cp22 = undefined;
 
+    function check2(pno){
+        window.alert("Plot Selected : "+pno);
+    } 
+
     function check(idval){
-        alert("Plot index : "+idval);
+        document.getElementById("rewrite").innerHTML = story_list[idval][1];
+        var re = "";
+        for(i=0;i<story_list[idval][3].length;++i){
+            re = re + "<br/><input type=\"radio\" value=\""+i+"\" onclick=\"check2("+i+")\" /> "+story_list[idval][3][i];
+        }
+        document.getElementById("rewrite").innerHTML = re;
     }
 
     function writescreenplay(){
@@ -41,12 +55,12 @@
                 if(story_list[i][1]=="PLOT" && story_list[i][0]!=""){
                     re = re + "<h3>SCENE : "+sceneno+"</h3>";
                     sceneno = sceneno + 1;
-                    re = re + "<font color=\"red\">"+story_list[i][0]+"<button onclick=\"check("+i+")\">Rewrite</button></font>";
+                    re = re + "<span style=\"color: red;\">"+story_list[i][0]+"<button onclick=\"check("+i+")\">Rewrite</button></span>";
                 }
                 else if(story_list[i][1]=="NARRATION"){
                     if(i>0 && story_list[i-1]!="NARRATION")
                         re = re + "<br/>";
-                    re = re + "<font color=\"green\">"+story_list[i][0]+"</font>";
+                    re = re + "<span style=\"color: green;\">"+story_list[i][0]+"</span>";
                 }
                 else if(story_list[i][1]=="DIALOGUE"){
                     if(i>0 && story_list[i-1]!="DIALOGUE")
