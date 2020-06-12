@@ -105,17 +105,17 @@
                 if(story_list[i][1]=="PLOT" && story_list[i][0]!=""){
                     re = re + "<h3>SCENE : "+sceneno+"</h3>";
                     sceneno = sceneno + 1;
-                    re = re + "<span style=\"color: red;\">"+story_list[i][0]+"<audio controls src=\"/audio/"+audio_file_names[i]+"\"></audio>";
+                    re = re + "<span style=\"color: red;\">"+story_list[i][0].trim()+"<audio style=\"height: 10px;\" src='/audio/" + audio_file_names[i] +"' controls></audio>";
                 }
                 else if(story_list[i][1]=="NARRATION"){
                     if(i>0 && story_list[i-1]!="NARRATION")
                         re = re + "<br/>";
-                    re = re + "<span style=\"color: green;\">"+story_list[i][0]+"</span>"+"<audio controls src=\"/audio/"+audio_file_names[i]+"\"></audio>";;
+                    re = re + "<span style=\"color: green;\">"+story_list[i][0].trim()+"</span>"+"<audio style=\"height: 10px;\" src='/audio/" + audio_file_names[i] +"' controls></audio>";
                 }
                 else if(story_list[i][1]=="DIALOGUE"){
                     if(i>0 && story_list[i-1]!="DIALOGUE")
                         re = re + "<br/>";
-                    re = re + "<b>"+story_list[i][4]+" : </b>"+story_list[i][5]+"<audio controls src=\"/audio/"+audio_file_names[i]+"\" style=\"height: 10px;\"></audio>";
+                    re = re + "<b>"+story_list[i][4]+" : </b>"+story_list[i][5].trim()+"<audio style=\"height: 10px;\" src='/audio/" + audio_file_names[i] +"' controls></audio>";
                 }
             }
         }
@@ -175,18 +175,18 @@
             if(data.phase==1 && data.status=="STARTED"){
                 current_phase = 1;
                 current_data_server = 1;
-                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 1 Started";
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 1 Started</b>";
             }
             else if(data.phase==1 && data.status=="COMPLETED"){
                 current_data_server = 0;
                 story_list = data.output;
-                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 1 Completed<br/>"+JSON.stringify(data);
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 1 Completed</b><br/>"+JSON.stringify(data);
                 cp21();
             }
             else if(data.phase==2 && data.procedureNo==0 && data.status=="STARTED"){
                 current_phase = 2;
                 current_data_server = 2;
-                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.1 Started";
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.1 Started</b>";
             }
             else if(data.phase==2 && data.procedureNo==0 && data.status=="COMPLETED"){
                 current_data_server = 0;
@@ -202,13 +202,13 @@
                         current_plotwords.push(tmp);
                     }
                 }
-                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.1 Completed<br/>"+JSON.stringify(data);
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.1 Completed</b><br/>"+JSON.stringify(data);
                 cp22();
             }
             else if(data.phase==2 && data.procedureNo==1 && data.status=="STARTED"){
                 current_phase = 2;
                 current_data_server = 2;
-                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Started";
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.2 Started</b>";
             }
             else if(data.phase==2 && data.procedureNo==1 && data.status=="COMPLETED"){
                 current_data_server = 0;
@@ -236,8 +236,8 @@
                             story_list[data.output[i][0]][3].push(data.output[i][1]);
                         }
                     }
-                    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed<br/>"+JSON.stringify(data);
-                    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed StoryList<br/>"+JSON.stringify(story_list);
+                    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.2 Completed</b><br/>"+JSON.stringify(data);
+                    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.2 Completed StoryList</b><br/>"+JSON.stringify(story_list);
                     writescreenplay();
                     window.alert("Completed");
                 }
@@ -245,12 +245,12 @@
             else if(data.phase==3 && data.status=="STARTED"){
                 current_phase = 3;
                 current_data_server = 3;
-                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 3 Started";
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 3 Started</b>";
             }
             else if(data.phase==3 && data.status=="COMPLETED"){
                 current_data_server = 0;
                 audio_file_names = data.output;
-                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 3 Completed";
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 3 Completed</b>";
                 writescreenplaywithaudio();
             }
         });
