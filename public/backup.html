@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alyce : An A.I fine tuned screenplay writer</title>
+</head>
+<body>
+    <textarea id="input_story" rows="10" style="width: 90vw;"></textarea>
+    <br/>
+    <input type="button" id="submit_input_story" value="Submit 1"/>
+    <br/>
+    <div id="result"></div>
+    <hr/>
+    <hr/>
+    <div>
+        <h2>REWRITE SECTION</h2>
+        <div id="rewrite"></div>
+        <div id="rewrite1"></div>
+        <div id="rewrite2"></div>
+    </div>
+</body>
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var rewrite_flag = false;
+    var story = undefined;
+    var story_list = undefined;
+    var audio_file_names = [];
+    var plot_index_list = [];
+    var current_plotwords = [];
+    var current_phase = 0;
+    var current_data_server = 0;
+    var active_clients = 0;
+    var no_of_p1_servers = 0;
+    var no_of_p2_servers = 0;
+    var no_of_p3_servers = 0;
+    var input_story = document.getElementById("input_story");
+    var submit_button = document.getElementById("submit_input_story");
+    var cp21 = undefined;
+    var cp22 = undefined;
+    var cp31 = undefined;
+
+    function check2(idval,pno){
+        story_list[idval][0] = story_list[idval][3][pno];
+        window.alert("Changed!...");
+    }
+
+    function rewrite(idval){
+        rewrite_flag = true;
+        current_plotwords = [[idval,story_list[idval][2]]];
+        document.getElementById("rewrite2").innerHTML = document.getElementById("rewrite1").innerHTML + document.getElementById("rewrite2").innerHTML;
+        document.getElementById("rewrite1").innerHTML = "";
+        cp22();
+    }
+
+    function check(idval){
+        document.getElementById("rewrite").innerHTML = story_list[idval][0]+"<br/>"+"<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite("+idval+")\" /><input type=\"button\" value=\"close\" onclick=\"writescreenplay()\"/>";
+        document.getElementById("rewrite1").innerHTML = "";
+        var re = "";
+        for(i=story_list[idval][3].length-1;i>=0;--i){
+            re = re + "<br/><input type=\"radio\" value=\""+i+"\" onclick=\"check2("+idval+","+i+")\" /> "+story_list[idval][3][i];
+        }
+        document.getElementById("rewrite2").innerHTML = re;
+    }
+
+    function writescreenplay(){
+        re = "<hr/>";
+        document.getElementById("rewrite").innerHTML = "";
+        document.getElementById("rewrite1").innerHTML = "";
+        document.getElementById("rewrite2").innerHTML = "";
+
+        sceneno = 1;
+        if(story_list!=undefined){
+            for(i=0;i<story_list.length;++i){
+                if(story_list[i][1]=="PLOT" && story_list[i][0]!=""){
+                    re = re + "<h3>SCENE : "+sceneno+"</h3>";
+                    sceneno = sceneno + 1;
+                    re = re + "<span style=\"color: red;\">"+story_list[i][0]+"<button onclick=\"check("+i+")\">Rewrite</button></span>";
+                }
+                else if(story_list[i][1]=="NARRATION"){
+                    if(i>0 && story_list[i-1]!="NARRATION")
+                        re = re + "<br/>";
+                    re = re + "<span style=\"color: green;\">"+story_list[i][0]+"</span>";
+                }
+                else if(story_list[i][1]=="DIALOGUE"){
+                    if(i>0 && story_list[i-1]!="DIALOGUE")
+                        re = re + "<br/>";
+                    re = re + "<b>"+story_list[i][4]+" : </b>"+story_list[i][5];
+                }
+            }
+            re = re + "<br/>&nbsp;<br/>&nbsp;<br/><button onclick=\"cp31()\">Generate Audio Transcript</button>";
+        }
+        document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + re;
+    }
+
+    function writescreenplaywithaudio(){
+        re = "<hr/>";
+        document.getElementById("rewrite").innerHTML = "";
+        document.getElementById("rewrite1").innerHTML = "";
+        document.getElementById("rewrite2").innerHTML = "";
+
+        sceneno = 1;
+        if(story_list!=undefined){
+            for(i=0;i<story_list.length;++i){
+                if(story_list[i][1]=="PLOT" && story_list[i][0]!=""){
+                    re = re + "<h3>SCENE : "+sceneno+"</h3>";
+                    sceneno = sceneno + 1;
+                    re = re + "<span style=\"color: red;\">"+story_list[i][0].trim()+"</span>"+"<audio style=\"height: 10px;\" src='/audio/" + audio_file_names[i] +"' controls></audio>";
+                }
+                else if(story_list[i][1]=="NARRATION"){
+                    if(i>0 && story_list[i-1]!="NARRATION")
+                        re = re + "<br/>";
+                    re = re + "<span style=\"color: green;\">"+story_list[i][0].trim()+"</span>"+"<audio style=\"height: 10px;\" src='/audio/" + audio_file_names[i] +"' controls></audio>";
+                }
+                else if(story_list[i][1]=="DIALOGUE"){
+                    if(i>0 && story_list[i-1]!="DIALOGUE")
+                        re = re + "<br/>";
+                    re = re + "<b>"+story_list[i][4]+" : </b>"+story_list[i][5].trim()+"<audio style=\"height: 10px;\" src='/audio/" + audio_file_names[i] +"' controls></audio>";
+                }
+            }
+        }
+        document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + re;
+    }
+
+    function initialize_socket(){
+
+        // Creating Socket Instance
+        const socket = io();
+
+        // Connecting To the Backend Server
+        socket.on("connect", () => {
+
+            // Informing The Server that the client is ready
+            socket.emit("client-ready", "");
+
+            // Event Listener to send data to server when user click submit button
+            submit_button.onclick = function(){
+                let input_data = input_story.value;
+                if(input_data!=""){
+                    socket.emit("client-to-server",{"phase": 1, "procedureNo": 0, "input": input_data});
+                    story = input_data;
+                }
+                else{
+                    window.alert("No Input Data!...");
+                }
+            }
+
+            cp21 = function call_phase_2_step_1(){
+                socket.emit("client-to-server",{"phase": 2, "procedureNo": 0, "input": story_list});
+            }
+
+            cp22 = function call_phase_2_step_2(){
+                socket.emit("client-to-server",{"phase": 2, "procedureNo": 1, "input": current_plotwords});
+            }
+
+            cp31 = function call_phase_3_step_1(){
+                socket.emit("client-to-server",{"phase": 3, "procedureNo": 0, "input": story_list});
+            }
+
+            // To get Information regarding the no of active connections
+            socket.on("sub-servers-and-clients-status",function(data){
+                active_clients = data.clients;
+                no_of_p1_servers = data.P1_instances;
+                no_of_p2_servers = data.P2_instances;
+                no_of_p3_servers = data.P3_instances;
+                console.log("Active Connections : "+active_clients+", "+no_of_p1_servers+", "+no_of_p2_servers+", "+no_of_p3_servers);
+            });
+        });
+
+        socket.on("server-to-client",function(data){
+            if(data.error==true){
+                window.alert("ERROR : "+data.errormsg);
+                return;
+            }
+            if(data.phase==1 && data.status=="STARTED"){
+                current_phase = 1;
+                current_data_server = 1;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 1 Started</b>";
+            }
+            else if(data.phase==1 && data.status=="COMPLETED"){
+                current_data_server = 0;
+                story_list = data.output;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 1 Completed</b><br/>"+JSON.stringify(data);
+                cp21();
+            }
+            else if(data.phase==2 && data.procedureNo==0 && data.status=="STARTED"){
+                current_phase = 2;
+                current_data_server = 2;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.1 Started</b>";
+            }
+            else if(data.phase==2 && data.procedureNo==0 && data.status=="COMPLETED"){
+                current_data_server = 0;
+                story_list = data.output;
+                plot_index_list = []
+                current_plotwords = []
+                for(i=0;i<story_list.length;++i){
+                    if(story_list[i][1]=="PLOT"){
+                        plot_index_list.push(i);
+                        tmp = []
+                        tmp.push(i)
+                        tmp.push(story_list[i][2])
+                        current_plotwords.push(tmp);
+                    }
+                }
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.1 Completed</b><br/>"+JSON.stringify(data);
+                cp22();
+            }
+            else if(data.phase==2 && data.procedureNo==1 && data.status=="STARTED"){
+                current_phase = 2;
+                current_data_server = 2;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.2 Started</b>";
+            }
+            else if(data.phase==2 && data.procedureNo==1 && data.status=="COMPLETED"){
+                current_data_server = 0;
+                // Plot Completed!......
+                /*for(i=0;i<data.output.length;++i){
+                    if(data.output[i][1]!=""){
+                      story_list[data.output[i][0]][0] = data.output[i][1];
+                      story_list[data.output[i][0]][3].push(data.output[i][1]);
+                    }
+                }
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed<br/>"+JSON.stringify(data);
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed StoryList<br/>"+JSON.stringify(story_list);
+                if(flag==true)
+                    writescreenplay();
+                flag = false;
+                window.alert("Completed");*/
+                if(rewrite_flag==true){
+                    story_list[data.output[0][0]][3].push(data.output[0][1]);
+                    document.getElementById("rewrite1").innerHTML = "<br/><input type=\"radio\" value=\""+(story_list[data.output[0][0]][3].length-1)+"\" onclick=\"check2("+data.output[0][0]+","+(story_list[data.output[0][0]][3].length-1)+")\" /> "+data.output[0][1];
+                }
+                else{
+                    for(i=0;i<data.output.length;++i){
+                        if(data.output[i][1]!=""){
+                            story_list[data.output[i][0]][0] = data.output[i][1];
+                            story_list[data.output[i][0]][3].push(data.output[i][1]);
+                        }
+                    }
+                    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.2 Completed</b><br/>"+JSON.stringify(data);
+                    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 2.2 Completed StoryList</b><br/>"+JSON.stringify(story_list);
+                    writescreenplay();
+                    window.alert("Completed");
+                }
+            }
+            else if(data.phase==3 && data.status=="STARTED"){
+                current_phase = 3;
+                current_data_server = 3;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 3 Started</b>";
+            }
+            else if(data.phase==3 && data.status=="COMPLETED"){
+                current_data_server = 0;
+                audio_file_names = data.output;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/><b>Phase 3 Completed</b>";
+                writescreenplaywithaudio();
+            }
+        });
+
+    }
+
+    window.onload = function(){
+        initialize_socket();
+    }
+</script>
