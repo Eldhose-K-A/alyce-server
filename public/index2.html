@@ -105,7 +105,7 @@
                 if(story_list[i][1]=="PLOT" && story_list[i][0]!=""){
                     re = re + "<h3>SCENE : "+sceneno+"</h3>";
                     sceneno = sceneno + 1;
-                    re = re + "<span style=\"color: red;\">"+story_list[i][0].trim()+"<audio style=\"height: 10px;\" src='/audio/" + audio_file_names[i] +"' controls></audio>";
+                    re = re + "<span style=\"color: red;\">"+story_list[i][0].trim()+"</span>"+"<audio style=\"height: 10px;\" src='/audio/" + audio_file_names[i] +"' controls></audio>";
                 }
                 else if(story_list[i][1]=="NARRATION"){
                     if(i>0 && story_list[i-1]!="NARRATION")
