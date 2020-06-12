@@ -13,12 +13,14 @@
     <div>
         <h2>REWRITE SECTION</h2>
         <div id="rewrite"></div>
-        <div class="rewrite2"></div>
+        <div id="rewrite1"></div>
+        <div id="rewrite2"></div>
     </div>
 </body>
 </html>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+    var rewrite_flag = false;
     var story = undefined;
     var story_list = undefined;
     var plot_index_list = [];
@@ -34,17 +36,26 @@
     var cp21 = undefined;
     var cp22 = undefined;
 
-    function check2(pno){
-        window.alert("Plot Selected : "+pno);
-    } 
+    function check2(idval,pno){
+        story_list[idval][0] = story_list[idval][3][pno];
+        window.alert("Changed!...");
+    }
+
+    function rewrite(idval){
+        rewrite_flag = true;
+        current_plotwords = [[idval,story_list[idval][3]]];
+        document.getElementById("rewrite2").innerHTML = document.getElementById("rewrite1").innerHTML + document.getElementById("rewrite2").innerHTML;
+        document.getElementById("rewrite1").innerHTML = "";
+        cp22();
+    }
 
     function check(idval){
-        document.getElementById("rewrite").innerHTML = story_list[idval][1];
+        document.getElementById("rewrite").innerHTML = story_list[idval][1]+"br/>"+"<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite("+idval+")\" /><input type=\"button\" value=\"close\" onclick=\"writescreenplay()\"/>";
         var re = "";
-        for(i=0;i<story_list[idval][3].length;++i){
-            re = re + "<br/><input type=\"radio\" value=\""+i+"\" onclick=\"check2("+i+")\" /> "+story_list[idval][3][i];
+        for(i=story_list[idval][3].length-1;i>=0;--i){
+            re = re + "<br/><input type=\"radio\" value=\""+i+"\" onclick=\"check2("+idval+","+i+")\" /> "+story_list[idval][3][i];
         }
-        document.getElementById("rewrite").innerHTML = re;
+        document.getElementById("rewrite2").innerHTML = re;
     }
 
     function writescreenplay(){
@@ -153,7 +164,7 @@
                 document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Started";
             }
             else if(data.phase==2 && data.procedureNo==1 && data.status=="COMPLETED"){
-                current_data_server = 0;
+                /*current_data_server = 0;
                 // Plot Completed!......
                 for(i=0;i<data.output.length;++i){
                     if(data.output[i][1]!=""){
@@ -163,9 +174,26 @@
                 }
                 document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed<br/>"+JSON.stringify(data);
                 document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed StoryList<br/>"+JSON.stringify(story_list);
-                writescreenplay();
-                window.alert("Completed");
-
+                if(flag==true)
+                    writescreenplay();
+                flag = false;
+                window.alert("Completed");*/
+                if(rewrite_flag==true){
+                    story_list[data.output[0][0]][3].push(data.output[0][1]);
+                    document.getElementById("rewrite1").innerHTML = "<br/><input type=\"radio\" value=\""+(story_list[data.output[0][0]][3].length-1)+"\" onclick=\"check2("+data.output[0][0]+","+(story_list[data.output[0][0]][3].length-1)+")\" /> "+data.output[0][0];
+                }
+                else{
+                    for(i=0;i<data.output.length;++i){
+                        if(data.output[i][1]!=""){
+                            story_list[data.output[i][0]][0] = data.output[i][1];
+                            story_list[data.output[i][0]][3].push(data.output[i][1]);
+                        }
+                    }
+                    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed<br/>"+JSON.stringify(data);
+                    document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed StoryList<br/>"+JSON.stringify(story_list);
+                    writescreenplay();
+                    window.alert("Completed");
+                }
             }
         });
 
