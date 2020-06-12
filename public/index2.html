@@ -2,117 +2,122 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sample page</title>
+    <title>Alyce : An A.I fine tuned screenplay writer</title>
 </head>
 <body>
-<table>
-    <tr>
-        <td>Active Clients</td><td> : </td><td><span id="clist"></span></td>
-    </tr>
-    <tr>
-        <td>Active P1 Instances</td><td> : </td><td><span id="plist1"></span></td>
-    </tr>
-    <tr>
-        <td>Active P2 Instances</td><td> : </td><td><span id="plist2"></span></td>
-    </tr>
-    <tr>
-        <td>Active P3 Instances</td><td> : </td><td><span id="plist3"></span></td>
-    </tr>
-</table>
-<br/>
-<hr/>
-<textarea id="input_story" rows="10" style="width: 90vw;"></textarea>
-<br/>
-<input type="button" id="submit_input_story" value="Submit 1"/>
-<br/>
-<input type="button" id="submit_input_story2" value="Submit 2"/>
-<br/>
-<input type="button" id="submit_input_story3" value="Submit 3"/>
-<br/>
-<input type="button" id="submit_input_story4" value="Submit 4"/>
-<br/>
-<div id="re"></div>
-
-<!-- this link is magically provided by socket.io -->
-<script src="/socket.io/socket.io.js"></script>
+    <textarea id="input_story" rows="10" style="width: 90vw;"></textarea>
+    <br/>
+    <input type="button" id="submit_input_story" value="Submit 1"/>
+    <br/>
+    <div id="result"></div>
+</body>
+</html>
 <script>
-    window.onload = function(){
-        var story_input = document.getElementById("input_story");
-        var story_input_button = document.getElementById("submit_input_story");
-        var story_input_button2 = document.getElementById("submit_input_story2");
-        var story_input_button3 = document.getElementById("submit_input_story3");
-		var story_input_button4 = document.getElementById("submit_input_story4");
-        var result = document.getElementById("re");
+    var story = undefined;
+    var story_list = undefined;
+    var plot_index_list = [];
+    var current_plotwords = [];
+    var current_phase = 0;
+    var current_data_server = 0;
+    var active_clients = 0;
+    var no_of_p1_servers = 0;
+    var no_of_p2_servers = 0;
+    var no_of_p3_servers = 0;
+    var input_story = document.getElementById("input_story");
+    var submit_button = document.getElementById("submit_input_story");
 
+
+    function initialize_socket(){
+
+        // Creating Socket Instance
         const socket = io();
+
+        // Connecting To the Backend Server
         socket.on("connect", () => {
+
+            // Informing The Server that the client is ready
             socket.emit("client-ready", "");
-            story_input_button.onclick = function(){
-                let in_data = story_input.value;
-                if(in_data!=""){
-                    socket.emit("client-to-server",{"phase": 1, "procedureNo": 0, "input": in_data});
+
+            // Event Listener to send data to server when user click submit button
+            submit_button.onclick = function(){
+                let input_data = input_story.value;
+                if(input_data!=""){
+                    socket.emit("client-to-server",{"phase": 1, "procedureNo": 0, "input": input_data});
+                    story = input_data;
                 }
                 else{
                     window.alert("No Input Data!...");
                 }
             }
-            story_input_button2.onclick = function(){
-                let in_data = JSON.parse(story_input.value);
-                if(in_data!=undefined){
-                    socket.emit("client-to-server",{"phase": 2, "procedureNo": 0, "input": in_data.output});
-                }
-                else{
-                    window.alert("No Input Data!...");
-                }
+
+            function call_phase_2_step_1(){
+                socket.emit("client-to-server",{"phase": 2, "procedureNo": 0, "input": story_list});
             }
-            story_input_button3.onclick = function(){
-                let in_data = JSON.parse(story_input.value);
-                if(in_data!=undefined){
-                    socket.emit("client-to-server",{"phase": 2, "procedureNo": 1, "input": []});
-                }
-                else{
-                    window.alert("No Input Data!...");
-                }
+
+            function call_phase_2_step_2(){
+                socket.emit("client-to-server",{"phase": 2, "procedureNo": 1, "input": current_plotwords});
             }
-			story_input_button4.onclick = function(){
-                let in_data = JSON.parse(story_input.value);
-                if(in_data!=undefined){
-                    socket.emit("client-to-server",{"phase": 3, "procedureNo": 0, "input": in_data.output});
-                }
-                else{
-                    window.alert("No Input Data!...");
-                }
-            }
+
+            // To get Information regarding the no of active connections
+            socket.on("sub-servers-and-clients-status",function(data){
+                active_clients = data.clients;
+                no_of_p1_servers = data.P1_instances;
+                no_of_p2_servers = data.P2_instances;
+                no_of_p3_servers = data.P3_instances;
+                console.log("Active Connections : "+active_clients+", "+no_of_p1_servers+", "+no_of_p2_servers+", "+no_of_p3_servers);
+            });
         });
 
         socket.on("server-to-client",function(data){
-            result.innerHTML = result.innerHTML + "<br/>---<br/>" + story_input.value;
-            story_input.value = JSON.stringify(data);
+            if(data.phase==1 && data.status=="STARTED"){
+                current_phase = 1;
+                current_data_server = 1;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 1 Started";
+            }
+            else if(data.phase==1 && data.status=="COMPLETED"){
+                current_data_server = 0;
+                story_list = data.output;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 1 Completed<br/>"+JSON.stringify(data);
+                call_phase_2_step_1();
+            }
+            else if(data.phase==2 && data.procedureNo==0 && data.status=="STARTED"){
+                current_phase = 2;
+                current_data_server = 2;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.1 Started";
+            }
+            else if(data.phase==2 && data.procedureNo==0 && data.status=="COMPLETED"){
+                current_data_server = 0;
+                story_list = data.output;
+                plot_index_list = []
+                current_plotwords = []
+                for(i=0;i<story_list.length;++i){
+                    if(story_list[i][1]=="PLOT"){
+                        plot_index_list.push(i);
+                        tmp = []
+                        tmp.push(i)
+                        tmp.push(story_list[i][2])
+                        current_plotwords.push(tmp);
+                    }
+                }
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.1 Completed<br/>"+JSON.stringify(data);
+                call_phase_2_step_2();
+            }
+            else if(data.phase==2 && data.procedureNo==1 && data.status=="STARTED"){
+                current_phase = 2;
+                current_data_server = 2;
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Started";
+            }
+            else if(data.phase==2 && data.procedureNo==1 && data.status=="COMPLETED"){
+                current_data_server = 0;
+                // Plot Completed!......
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed<br/>"+JSON.stringify(data);
+                window.alert("Completed");
+            }
         });
 
-        socket.on("sub-servers-and-clients-status",function(data){
-            var c1 = document.getElementById("clist");
-            var p1 = document.getElementById("plist1");
-            var p2 = document.getElementById("plist2");
-            var p3 = document.getElementById("plist3");
-            c1.innerHTML = data.clients;
-            p1.innerHTML = data.P1_instances;
-            p2.innerHTML = data.P2_instances;
-            p3.innerHTML = data.P3_instances;
-            if(data.P1_instances<1)
-                p1.style.color = "red";
-            else
-                p1.style.color = "green";
-            if(data.P2_instances<1)
-                p2.style.color = "red";
-            else
-                p2.style.color = "green";
-            if(data.P3_instances<1)
-                p3.style.color = "red";
-            else
-                p3.style.color = "green";
-        });
+    }
+
+    window.onload = function(){
+        initialize_socket();
     }
 </script>
-</body>
-</html>
