@@ -115,10 +115,9 @@
                 else if(story_list[i][1]=="DIALOGUE"){
                     if(i>0 && story_list[i-1]!="DIALOGUE")
                         re = re + "<br/>";
-                    re = re + "<b>"+story_list[i][4]+" : </b>"+story_list[i][5]+"<audio controls src=\"/audio/"+audio_file_names[i]+"\"></audio>";
+                    re = re + "<b>"+story_list[i][4]+" : </b>"+story_list[i][5]+"<audio controls src=\"/audio/"+audio_file_names[i]+"\" style=\"height: 10px;\"></audio>";
                 }
             }
-            re = re + "<br/>&nbsp;<br/>&nbsp;<br/><button onclick=\"cp31()\">Generate Audio Transcript</button>";
         }
         document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + re;
     }
