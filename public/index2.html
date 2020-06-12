@@ -12,6 +12,7 @@
     <div id="result"></div>
 </body>
 </html>
+<script src="/socket.io/socket.io.js"></script>
 <script>
     var story = undefined;
     var story_list = undefined;
@@ -25,7 +26,37 @@
     var no_of_p3_servers = 0;
     var input_story = document.getElementById("input_story");
     var submit_button = document.getElementById("submit_input_story");
+    var cp21 = undefined;
+    var cp22 = undefined;
 
+    function check(idval){
+        alert("Plot index : "+idval);
+    }
+
+    function writescreenplay(){
+        re = "<hr/>";
+        sceneno = 1;
+        if(story_list!=undefined){
+            for(i=0;i<story_list.length;++i){
+                if(story_list[i][1]=="PLOT" && story_list[i][0]!=""){
+                    re = re + "<h3>SCENE : "+sceneno+"</h3>";
+                    sceneno = sceneno + 1;
+                    re = re + "<font color=\"red\">"+story_list[i][0]+"<button onclick=\"check("+i+")\">Rewrite</button></font>";
+                }
+                else if(story_list[i][1]=="NARRATION"){
+                    if(i>0 && story_list[i-1]!="NARRATION")
+                        re = re + "<br/>";
+                    re = re + "<font color=\"green\">"+story_list[i][0]+"</font>";
+                }
+                else if(story_list[i][1]=="DIALOGUE"){
+                    if(i>0 && story_list[i-1]!="DIALOGUE")
+                        re = re + "<br/>";
+                    re = re + "<b>"+story_list[i][4]+" : </b>"+story_list[i][5];
+                }
+            }
+        }
+        document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + re;
+    }
 
     function initialize_socket(){
 
@@ -50,11 +81,11 @@
                 }
             }
 
-            function call_phase_2_step_1(){
+            cp21 = function call_phase_2_step_1(){
                 socket.emit("client-to-server",{"phase": 2, "procedureNo": 0, "input": story_list});
             }
 
-            function call_phase_2_step_2(){
+            cp22 = function call_phase_2_step_2(){
                 socket.emit("client-to-server",{"phase": 2, "procedureNo": 1, "input": current_plotwords});
             }
 
@@ -78,7 +109,7 @@
                 current_data_server = 0;
                 story_list = data.output;
                 document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 1 Completed<br/>"+JSON.stringify(data);
-                call_phase_2_step_1();
+                cp21();
             }
             else if(data.phase==2 && data.procedureNo==0 && data.status=="STARTED"){
                 current_phase = 2;
@@ -100,7 +131,7 @@
                     }
                 }
                 document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.1 Completed<br/>"+JSON.stringify(data);
-                call_phase_2_step_2();
+                cp22();
             }
             else if(data.phase==2 && data.procedureNo==1 && data.status=="STARTED"){
                 current_phase = 2;
@@ -110,8 +141,16 @@
             else if(data.phase==2 && data.procedureNo==1 && data.status=="COMPLETED"){
                 current_data_server = 0;
                 // Plot Completed!......
+                for(i=0;i<data.output.length;++i){
+                    if(data.output[i][1]!=""){
+                      story_list[data.output[i][0]][0] = data.output[i][1];
+                      story_list[data.output[i][0]][3].push(data.output[i][1]);
+                    }
+                }
                 document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed<br/>"+JSON.stringify(data);
-                window.alert("Completed");
+                document.getElementById("result").innerHTML = document.getElementById("result").innerHTML + "<br/>Phase 2.2 Completed StoryList<br/>"+JSON.stringify(story_list);
+                window.alert("Completed"); 
+
             }
         });
 
