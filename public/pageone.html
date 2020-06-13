@@ -198,7 +198,7 @@
       story_list[plot_no][0] = story_list[plot_no][3][sublist_index];
       rewrite_element_0.innerHTML = story_list[plot_no][0] + "<br/>" +
         "<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
-        ")\" /><input type=\"button\" value=\"close\" onclick=\"write_screenplay()\"/>";
+        ")\" /><input type=\"button\" value=\"close\" onclick=\"write_screenplay(2)\"/>";
     }
 
     function rewrite_plot(plot_no) {
@@ -214,7 +214,7 @@
     function open_rewrite_plot_dashboard(plot_no) {
       rewrite_element_0.innerHTML = story_list[plot_no][0] + "<br/>" +
         "<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
-        ")\" /><input type=\"button\" value=\"close\" onclick=\"write_screenplay()\"/>";
+        ")\" /><input type=\"button\" value=\"close\" onclick=\"write_screenplay(2)\"/>";
       rewrite_element_1.innerHTML = "";
       var rewrite_element_content = "";
       for (i = story_list[plot_no][3].length - 1; i >= 0; --i) {
@@ -226,7 +226,7 @@
       rewrite_element_2.innerHTML = rewrite_element_content;
     }
 
-    function write_screenplay() {
+    function write_screenplay(option) {
       script_content = "";
       sceneno = 1;
       if (story_list != undefined) {
@@ -234,20 +234,32 @@
           if (story_list[i][1] == "PLOT" && story_list[i][0] != "") {
             script_content = script_content + "<h3>SCENE : " + sceneno + "</h3>";
             sceneno = sceneno + 1;
-            script_content = script_content + "<span style=\"color: red;\">" + story_list[i][0] +
-              "</span>&nbsp;<button onclick=\"open_rewrite_plot_dashboard(" + i + ")\">Rewrite</button>";
+            script_content = script_content + "<span style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
+            if(option==2){ 
+              script_content = script_content + "&nbsp;<button onclick=\"open_rewrite_plot_dashboard(" + i + ")\">Rewrite</button>";
+            }
+            else if(option==3){
+              script_content = script_content + "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] + "' controls></audio>";
+            }
           } else if (story_list[i][1] == "NARRATION") {
             if (i > 0 && story_list[i - 1] != "NARRATION")
               script_content = script_content + "<br/>";
-            script_content = script_content + "<span style=\"color: green;\">" + story_list[i][0] + "</span>";
+            script_content = script_content + "<span style=\"color: green;\">" + story_list[i][0].trim() + "</span>";
+            if(option==3){
+              script_content = script_content + "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] + "' controls></audio>";
+            }
           } else if (story_list[i][1] == "DIALOGUE") {
             if (i > 0 && story_list[i - 1] != "DIALOGUE")
               script_content = script_content + "<br/>";
-            script_content = script_content + "<b>" + story_list[i][4] + " : </b>" + story_list[i][5];
+            script_content = script_content + "<b>" + story_list[i][4].trim() + " : </b>" + story_list[i][5].trim();
+            if(option==3){
+              script_content = script_content + "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] + "' controls></audio>";
+            }
           }
         }
-        script_content = script_content +
-          "<br/>&nbsp;<br/>&nbsp;<br/><button onclick=\"call_phase_3_step_1()\">Generate Audio Transcript</button>";
+        if(option==2){
+          script_content = script_content + "<br/>&nbsp;<br/>&nbsp;<br/><button onclick=\"call_phase_3_step_1()\">Generate Audio Transcript</button>";
+        }
       }
       logger_element.innerHTML = logger_element.innerHTML + script_content;
     }
@@ -262,7 +274,6 @@
             sceneno = sceneno + 1;
             script_content = script_content + "<span style=\"color: red;\">" + story_list[i][0].trim() + "</span>" +
               "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] + "' controls></audio>";
-            "</span>";
           } else if (story_list[i][1] == "NARRATION") {
             if (i > 0 && story_list[i - 1] != "NARRATION")
               script_content = script_content + "<br/>";
@@ -390,7 +401,7 @@
           story_list = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Completed</b><br/>" + JSON
             .stringify(data);
-          write_screenplay();
+          write_screenplay(1);
           timeline_content[1].innerHTML = script_content;
           call_phase_2_step_1();
         } else if (data.phase == 2 && data.procedureNo == 0 && data.status == "STARTED") {
@@ -448,7 +459,7 @@
               .stringify(data);
             logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Completed StoryList</b><br/>" +
               JSON.stringify(story_list);
-            write_screenplay();
+            write_screenplay(2);
             timeline_content[2].innerHTML = script_content;
           }
         } else if (data.phase == 3 && data.status == "STARTED") {
@@ -465,7 +476,7 @@
           re_initialize_timeline();
           audio_file_names = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Completed</b>";
-          write_screenplay_with_audio();
+          write_screenplay(3);
           timeline_content[3].innerHTML = script_content;
         }
 
