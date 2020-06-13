@@ -25,7 +25,7 @@
   </header>
 
   <!-- Content Input Section -->
-  <section class="fullscreen">
+  <section id="input_section" class="fullscreen">
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -58,7 +58,7 @@
   </section>
 
   <!-- Content Output Section -->
-  <section class="fullscreen">
+  <section  id="timeline_section" class="fullscreen">
     <div class="paragraph__content-container">
       <h1>Process Overview</h1>
       <div class="paragraph__timeline">
@@ -125,7 +125,7 @@
   </section>
 
   <!-- Rewrite Control Section -->
-  <section class="fullscreen">
+  <section id="rewrite_section" class="fullscreen">
     <h2>REWRITE SECTION</h2>
     <div id="rewrite_element_0"></div>
     <div id="rewrite_element_1"></div>
@@ -133,7 +133,8 @@
   </section>
 
   <!-- Data Log Section -->
-  <section class="fullscreen">
+  <section id="log_section" class="fullscreen">
+    <h2>LOG SECTION</h2>
     <div id="log_element"></div>
   </section>
 
@@ -210,10 +211,22 @@
       call_phase_2_step_2();
     }
 
+    function close_rewrite_plot_dashboard(){
+      write_screenplay(2);
+      timeline_content[2].innerHTML = script_content;
+      rewrite_element_0.innerHTML = "";
+      rewrite_element_1.innerHTML = "";
+      rewrite_element_2.innerHTML = "";
+      document.getElementById('rewrite_section').style.display = "none";
+      document.getElementById('timeline_section').style.display = "block";
+    }
+
     function open_rewrite_plot_dashboard(plot_no) {
+      document.getElementById('rewrite_section').style.display = "block";
+      document.getElementById('timeline_section').style.display = "none";
       rewrite_element_0.innerHTML = story_list[plot_no][0] + "<br/>" +
         "<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
-        ")\" /><input type=\"button\" value=\"close\" onclick=\"write_screenplay(2)\"/>";
+        ")\" />&emsp;<input type=\"button\" value=\"close\" onclick=\"close_rewrite_plot_dashboard()\"/>";
       rewrite_element_1.innerHTML = "";
       var rewrite_element_content = "";
       for (i = story_list[plot_no][3].length - 1; i >= 0; --i) {
@@ -275,6 +288,7 @@
         let input_data = input_story.value;
         if (input_data != "") {
           story = input_data;
+          document.getElementById('input_section').style.display = "none";
           call_phase_1_step_1();
         } else {
           window.alert("No Input Data!...");
