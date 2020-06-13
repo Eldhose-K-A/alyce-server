@@ -150,6 +150,7 @@
     var rewrite_flag = false;
     var story = undefined;
     var story_list = undefined;
+    var script_content = "";
     var audio_file_names = undefined;
     var plot_index_list = [];
     var current_plotwords = [];
@@ -226,7 +227,7 @@
     }
 
     function write_screenplay() {
-      script_content = "<hr/>";
+      script_content = "";
       sceneno = 1;
       if (story_list != undefined) {
         for (i = 0; i < story_list.length; ++i) {
@@ -252,7 +253,7 @@
     }
 
     function write_screenplay_with_audio() {
-      script_content = "<hr/>";
+      script_content = "";
       sceneno = 1;
       if (story_list != undefined) {
         for (i = 0; i < story_list.length; ++i) {
@@ -380,6 +381,7 @@
           timeline_label[1].classList.add("--is-inprogress");
           re_initialize_timeline();
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Started</b>";
+          timeline_content[0].innerHTML = "Input Received at Server";
         } else if (data.phase == 1 && data.status == "COMPLETED") {
           current_data_server = 0;
           timeline_label[1].classList.remove("--is-inprogress");
@@ -388,6 +390,8 @@
           story_list = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Completed</b><br/>" + JSON
             .stringify(data);
+          write_screenplay();
+          timeline_content[1].innerHTML = script_content;
           call_phase_2_step_1();
         } else if (data.phase == 2 && data.procedureNo == 0 && data.status == "STARTED") {
           current_phase = 2;
@@ -445,6 +449,7 @@
             logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Completed StoryList</b><br/>" +
               JSON.stringify(story_list);
             write_screenplay();
+            timeline_content[2].innerHTML = script_content;
           }
         } else if (data.phase == 3 && data.status == "STARTED") {
           current_phase = 3;
@@ -461,6 +466,7 @@
           audio_file_names = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Completed</b>";
           write_screenplay_with_audio();
+          timeline_content[3].innerHTML = script_content;
         }
 
       });
