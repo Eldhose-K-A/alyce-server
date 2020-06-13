@@ -431,7 +431,8 @@
           }
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Started</b>";
         } else if (data.phase == 2 && data.procedureNo == 1 && data.status == "COMPLETED") {
-          current_data_server = 0;
+          if(current_data_server==2)
+            current_data_server = 0;
           if (rewrite_flag == true) {
             story_list[data.output[0][0]][3].push(data.output[0][1]);
             rewrite_element_1.innerHTML = "<br/><label><input type=\"radio\" class=\"with-gap\" value=\"" + (
