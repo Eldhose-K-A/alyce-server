@@ -213,7 +213,7 @@
       var rewrite_element_content = "";
       for (i = story_list[plot_no][3].length - 1; i >= 0; --i) {
         rewrite_element_content = rewrite_element_content + "<br/><input type=\"radio\" value=\"" + i +
-          "\" onclick=\"set_as_plot(" + plot_no + "," + i + ")\" /> " + story_list[plot_no][3][i];
+          "\" onclick=\"set_as_plot(" + plot_no + "," + i + ")\" /> &emsp;&emsp; : " + story_list[plot_no][3][i];
       }
       rewrite_element_2.innerHTML = rewrite_element_content;
     }
@@ -410,10 +410,11 @@
           current_data_server = 0;
           if (rewrite_flag == true) {
             story_list[data.output[0][0]][3].push(data.output[0][1]);
-            rewrite_element_1 = "<br/><input type=\"radio\" value=\"" + (story_list[data.output[0][0]][3].length -
+            rewrite_element_1.innerHTML = "<br/><input type=\"radio\" value=\"" + (story_list[data.output[0][0]][3].length -
               1) + "\" onclick=\"set_as_plot(" + data.output[0][0] + "," + (story_list[data.output[0][0]][3]
               .length -
-              1) + ")\" /> " + data.output[0][1];
+              1) + ")\" /> &emsp;&emsp; : " + data.output[0][1];
+              rewrite_flag = false;
           } else {
             timeline_label[2].classList.remove("--is-inprogress");
             timeline_label[2].classList.add("--is-completed");
