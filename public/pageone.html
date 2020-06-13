@@ -169,8 +169,12 @@
     var call_phase_2_step_1 = undefined;
     var call_phase_2_step_2 = undefined;
     var call_phase_3_step_1 = undefined;
-    var timeline_label = [document.getElementById("phase00"), document.getElementById("phase01"), document.getElementById("phase02"), document.getElementById("phase03")];
-    var timeline_content = [document.getElementById("progress_indicator_0"), document.getElementById("progress_indicator_1"), document.getElementById("progress_indicator_2"), document.getElementById("progress_indicator_3")];
+    var timeline_label = [document.getElementById("phase00"), document.getElementById("phase01"), document
+      .getElementById("phase02"), document.getElementById("phase03")
+    ];
+    var timeline_content = [document.getElementById("progress_indicator_0"), document.getElementById(
+      "progress_indicator_1"), document.getElementById("progress_indicator_2"), document.getElementById(
+      "progress_indicator_3")];
 
     // Code to Set the Tool tip of Timeline correctly
     function re_initialize_timeline() {
@@ -191,7 +195,7 @@
     function set_as_plot(plot_no, sublist_index) {
       story_list[plot_no][0] = story_list[plot_no][3][sublist_index];
       rewrite_element_0.innerHTML = story_list[plot_no][0] + "<br/>" +
-        "<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite(" + plot_no +
+        "<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
         ")\" /><input type=\"button\" value=\"close\" onclick=\"writescreenplay()\"/>";
     }
 
@@ -215,7 +219,7 @@
         rewrite_element_content = rewrite_element_content + "<br/><label>";
         rewrite_element_content = rewrite_element_content + "<input type=\"radio\" value=\"" + i +
           "\"  class=\"with-gap\" name=\"plotno\"  onclick=\"set_as_plot(" + plot_no + "," + i + ")\" />";
-          rewrite_element_content = rewrite_element_content + "<span>" + story_list[plot_no][3][i] + "</span></label>";
+        rewrite_element_content = rewrite_element_content + "<span>" + story_list[plot_no][3][i] + "</span></label>";
       }
       rewrite_element_2.innerHTML = rewrite_element_content;
     }
@@ -240,7 +244,8 @@
             script_content = script_content + "<b>" + story_list[i][4] + " : </b>" + story_list[i][5];
           }
         }
-        script_content = script_content + "<br/>&nbsp;<br/>&nbsp;<br/><button onclick=\"call_phase_3_step_1()\">Generate Audio Transcript</button>";
+        script_content = script_content +
+          "<br/>&nbsp;<br/>&nbsp;<br/><button onclick=\"call_phase_3_step_1()\">Generate Audio Transcript</button>";
       }
       logger_element.innerHTML = logger_element.innerHTML + script_content;
     }
@@ -372,11 +377,13 @@
           timeline_label[0].classList.add("--is-completed");
           timeline_label[1].classList.remove("--is-pending");
           timeline_label[1].classList.add("--is-inprogress");
+          re_initialize_timeline();
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Started</b>";
         } else if (data.phase == 1 && data.status == "COMPLETED") {
           current_data_server = 0;
           timeline_label[1].classList.remove("--is-inprogress");
           timeline_label[1].classList.add("--is-completed");
+          re_initialize_timeline();
           story_list = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Completed</b><br/>" + JSON
             .stringify(data);
@@ -386,6 +393,7 @@
           current_data_server = 2;
           timeline_label[2].classList.remove("--is-pending");
           timeline_label[2].classList.add("--is-inprogress");
+          re_initialize_timeline();
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.1 Started</b>";
         } else if (data.phase == 2 && data.procedureNo == 0 && data.status == "COMPLETED") {
           current_data_server = 0;
@@ -412,14 +420,19 @@
           current_data_server = 0;
           if (rewrite_flag == true) {
             story_list[data.output[0][0]][3].push(data.output[0][1]);
-            rewrite_element_1.innerHTML = "<br/><input type=\"radio\" style=\"opacity: 1 !important;\" value=\"" + (story_list[data.output[0][0]][3].length -
+            /*rewrite_element_1.innerHTML = "<br/><input type=\"radio\" style=\"opacity: 1 !important;\" value=\"" + (story_list[data.output[0][0]][3].length -
               1) + "\" onclick=\"set_as_plot(" + data.output[0][0] + "," + (story_list[data.output[0][0]][3]
               .length -
-              1) + ")\" /> &emsp;&emsp; : " + data.output[0][1];
-              rewrite_flag = false;
+              1) + ")\" /> &emsp;&emsp; : " + data.output[0][1];*/
+            rewrite_element_1.innerHTML = "<br/><label><input type=\"radio\" class=\"with-gap\" value=\"" + (
+                story_list[data.output[0][0]][3].length - 1) + "\" onclick=\"set_as_plot(" + data.output[0][0] +
+              "," + (story_list[data.output[0][0]][3].length - 1) + ")\" /><span>" + data.output[0][1] +
+              "</span></label>";
+            rewrite_flag = false;
           } else {
             timeline_label[2].classList.remove("--is-inprogress");
             timeline_label[2].classList.add("--is-completed");
+            re_initialize_timeline();
             for (i = 0; i < data.output.length; ++i) {
               if (data.output[i][1] != "") {
                 story_list[data.output[i][0]][0] = data.output[i][1];
@@ -436,12 +449,14 @@
           current_phase = 3;
           timeline_label[3].classList.remove("--is-pending");
           timeline_label[3].classList.add("--is-inprogress");
+          re_initialize_timeline();
           current_data_server = 3;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Started</b>";
         } else if (data.phase == 3 && data.status == "COMPLETED") {
           current_data_server = 0;
           timeline_label[3].classList.remove("--is-inprogress");
           timeline_label[3].classList.add("--is-completed");
+          re_initialize_timeline();
           audio_file_names = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Completed</b>";
           write_screenplay_with_audio();
