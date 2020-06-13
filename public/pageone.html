@@ -179,16 +179,15 @@
 
     // Code to Set the Tool tip of Timeline correctly
     function re_initialize_timeline() {
-      console.log("Time Line Resetted!...");
-      tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-completed', {
+      tippy('.--is-completed', {
         content: 'Completed',
         placement: 'top'
       });
-      tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-inprogress', {
+      tippy('.--is-inprogress', {
         content: 'In Progress',
         placement: 'top'
       });
-      tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-pending', {
+      tippy('.--is-pending', {
         content: 'Pending',
         placement: 'top'
       });
@@ -334,6 +333,7 @@
         call_phase_1_step_1 = function () {
           timeline_label[0].classList.remove("--is-pending");
           timeline_label[0].classList.add("--is-inprogress");
+          timeline_label[0]._tippy.setContent("In Progress");
           socket.emit("client-to-server", {
             "phase": 1,
             "procedureNo": 0,
@@ -390,14 +390,15 @@
           timeline_label[0].classList.add("--is-completed");
           timeline_label[1].classList.remove("--is-pending");
           timeline_label[1].classList.add("--is-inprogress");
-          re_initialize_timeline();
+          timeline_label[0]._tippy.setContent("Completed");
+          timeline_label[1]._tippy.setContent("In Progress");
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Started</b>";
           timeline_content[0].innerHTML = "Input Received at Server";
         } else if (data.phase == 1 && data.status == "COMPLETED") {
           current_data_server = 0;
           timeline_label[1].classList.remove("--is-inprogress");
           timeline_label[1].classList.add("--is-completed");
-          re_initialize_timeline();
+          timeline_label[1]._tippy.setContent("Completed");
           story_list = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Completed</b><br/>" + JSON
             .stringify(data);
@@ -408,8 +409,8 @@
           current_phase = 2;
           current_data_server = 2;
           timeline_label[2].classList.remove("--is-pending");
-          timeline_label[2].classList.add("--is-inprogress");
-          re_initialize_timeline();
+          timeline_label[2].classList.add("--is-inprogress");          
+          timeline_label[2]._tippy.setContent("In Progress");
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.1 Started</b>";
         } else if (data.phase == 2 && data.procedureNo == 0 && data.status == "COMPLETED") {
           current_data_server = 0;
@@ -436,10 +437,6 @@
           current_data_server = 0;
           if (rewrite_flag == true) {
             story_list[data.output[0][0]][3].push(data.output[0][1]);
-            /*rewrite_element_1.innerHTML = "<br/><input type=\"radio\" style=\"opacity: 1 !important;\" value=\"" + (story_list[data.output[0][0]][3].length -
-              1) + "\" onclick=\"set_as_plot(" + data.output[0][0] + "," + (story_list[data.output[0][0]][3]
-              .length -
-              1) + ")\" /> &emsp;&emsp; : " + data.output[0][1];*/
             rewrite_element_1.innerHTML = "<br/><label><input type=\"radio\" class=\"with-gap\" value=\"" + (
                 story_list[data.output[0][0]][3].length - 1) + "\" onclick=\"set_as_plot(" + data.output[0][0] +
               "," + (story_list[data.output[0][0]][3].length - 1) + ")\" /><span>" + data.output[0][1] +
@@ -448,7 +445,7 @@
           } else {
             timeline_label[2].classList.remove("--is-inprogress");
             timeline_label[2].classList.add("--is-completed");
-            re_initialize_timeline();
+            timeline_label[2]._tippy.setContent("Completed");
             for (i = 0; i < data.output.length; ++i) {
               if (data.output[i][1] != "") {
                 story_list[data.output[i][0]][0] = data.output[i][1];
@@ -466,14 +463,14 @@
           current_phase = 3;
           timeline_label[3].classList.remove("--is-pending");
           timeline_label[3].classList.add("--is-inprogress");
-          re_initialize_timeline();
+          timeline_label[3]._tippy.setContent("In Progress");
           current_data_server = 3;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Started</b>";
         } else if (data.phase == 3 && data.status == "COMPLETED") {
           current_data_server = 0;
           timeline_label[3].classList.remove("--is-inprogress");
           timeline_label[3].classList.add("--is-completed");
-          re_initialize_timeline();
+          timeline_label[3]._tippy.setContent("Completed");
           audio_file_names = data.output;
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Completed</b>";
           write_screenplay(3);
