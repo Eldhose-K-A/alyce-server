@@ -126,10 +126,11 @@
   <!-- Rewrite Control Section -->
   <section id="rewrite_section" class="fullscreen">
     <h2>REWRITE SECTION</h2>
-    <div id="rewrite_progress"></div>
     <div id="rewrite_element_0"></div>
     <div id="rewrite_element_1"></div>
     <div id="rewrite_element_2"></div>
+    <br/>
+    <div id="rewrite_progress"></div>
   </section>
 
   <!-- Data Log Section -->
@@ -198,7 +199,7 @@
     function set_as_plot(plot_no, sublist_index) {
       story_list[plot_no][0] = story_list[plot_no][3][sublist_index];
       rewrite_element_0.innerHTML = "<b>CURRENTLY SELECTED : </b>"+story_list[plot_no][0] + "<br/>&nbsp;<br/>" +
-        "<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
+        "&emsp;<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
         ")\" />&emsp;<input type=\"button\" value=\"close\" onclick=\"close_rewrite_plot_dashboard()\"/>";
     }
 
@@ -227,7 +228,7 @@
       document.getElementById('rewrite_section').style.display = "block";
       document.getElementById('timeline_section').style.display = "none";
       rewrite_element_0.innerHTML =  "<b>CURRENTLY SELECTED : </b>"+story_list[plot_no][0] + "<br/>&nbsp;<br/>" +
-        "<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
+        "&emsp;<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
         ")\" />&emsp;<input type=\"button\" value=\"close\" onclick=\"close_rewrite_plot_dashboard()\"/>";
       rewrite_element_1.innerHTML = "";
       var rewrite_element_content = "";
