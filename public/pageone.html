@@ -178,6 +178,7 @@
 
     // Code to Set the Tool tip of Timeline correctly
     function re_initialize_timeline() {
+      console.log("Time Line Resetted!...");
       tippy('.paragraph__timeline:not(.--is-horizontal) .paragraph__timeline__entry.--is-completed', {
         content: 'Completed',
         placement: 'top'
@@ -196,7 +197,7 @@
       story_list[plot_no][0] = story_list[plot_no][3][sublist_index];
       rewrite_element_0.innerHTML = story_list[plot_no][0] + "<br/>" +
         "<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
-        ")\" /><input type=\"button\" value=\"close\" onclick=\"writescreenplay()\"/>";
+        ")\" /><input type=\"button\" value=\"close\" onclick=\"write_screenplay()\"/>";
     }
 
     function rewrite_plot(plot_no) {
