@@ -238,6 +238,7 @@
             script_content = script_content + "<b>" + story_list[i][4] + " : </b>" + story_list[i][5];
           }
         }
+        script_content = script_content + "<br/>&nbsp;<br/>&nbsp;<br/><button onclick=\"call_phase_3_step_1()\">Generate Audio Transcript</button>";
       }
       logger_element.innerHTML = logger_element.innerHTML + script_content;
     }
