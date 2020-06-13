@@ -263,32 +263,6 @@
       logger_element.innerHTML = logger_element.innerHTML + script_content;
     }
 
-    function write_screenplay_with_audio() {
-      script_content = "";
-      sceneno = 1;
-      if (story_list != undefined) {
-        for (i = 0; i < story_list.length; ++i) {
-          if (story_list[i][1] == "PLOT" && story_list[i][0] != "") {
-            script_content = script_content + "<h3>SCENE : " + sceneno + "</h3>";
-            sceneno = sceneno + 1;
-            script_content = script_content + "<span style=\"color: red;\">" + story_list[i][0].trim() + "</span>" +
-              "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] + "' controls></audio>";
-          } else if (story_list[i][1] == "NARRATION") {
-            if (i > 0 && story_list[i - 1] != "NARRATION")
-              script_content = script_content + "<br/>";
-            script_content = script_content + "<span style=\"color: green;\">" + story_list[i][0].trim() + "</span>" +
-              "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] + "' controls></audio>";
-          } else if (story_list[i][1] == "DIALOGUE") {
-            if (i > 0 && story_list[i - 1] != "DIALOGUE")
-              script_content = script_content + "<br/>";
-            script_content = script_content + "<b>" + story_list[i][4].trim() + " : </b>" + story_list[i][5].trim() +
-              "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] + "' controls></audio>";
-          }
-        }
-      }
-      logger_element.innerHTML = logger_element.innerHTML + script_content;
-    }
-
     $(document).ready(function () {
       $("body").removeClass('loader');
 
