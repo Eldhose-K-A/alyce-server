@@ -410,7 +410,7 @@
           current_data_server = 0;
           if (rewrite_flag == true) {
             story_list[data.output[0][0]][3].push(data.output[0][1]);
-            rewrite_element_1.innerHTML = "<br/><input type=\"radio\" value=\"" + (story_list[data.output[0][0]][3].length -
+            rewrite_element_1.innerHTML = "<br/><input type=\"radio\" style=\"opactity: 1;\" value=\"" + (story_list[data.output[0][0]][3].length -
               1) + "\" onclick=\"set_as_plot(" + data.output[0][0] + "," + (story_list[data.output[0][0]][3]
               .length -
               1) + ")\" /> &emsp;&emsp; : " + data.output[0][1];
