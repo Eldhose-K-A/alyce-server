@@ -210,12 +210,14 @@
         "<input type=\"button\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
         ")\" /><input type=\"button\" value=\"close\" onclick=\"write_screenplay()\"/>";
       rewrite_element_1.innerHTML = "";
-      var rewrite_element_content = "<form>";
+      var rewrite_element_content = "";
       for (i = story_list[plot_no][3].length - 1; i >= 0; --i) {
-        rewrite_element_content = rewrite_element_content + "<br/><input type=\"radio\" style=\"opacity: 1 !important;\" value=\"" + i +
-          "\"  class=\"with-gap\" name=\"plotno\"  onclick=\"set_as_plot(" + plot_no + "," + i + ")\" /> &emsp;&emsp; : " + story_list[plot_no][3][i];
+        rewrite_element_content = rewrite_element_content + "<br/><label>";
+        rewrite_element_content = rewrite_element_content + "<input type=\"radio\" value=\"" + i +
+          "\"  class=\"with-gap\" name=\"plotno\"  onclick=\"set_as_plot(" + plot_no + "," + i + ")\" />";
+          rewrite_element_content = rewrite_element_content + "<span>" + story_list[plot_no][3][i] + "</span></label>";
       }
-      rewrite_element_2.innerHTML = rewrite_element_content+"</form>";
+      rewrite_element_2.innerHTML = rewrite_element_content;
     }
 
     function write_screenplay() {
