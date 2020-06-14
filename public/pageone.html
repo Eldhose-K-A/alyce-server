@@ -313,7 +313,7 @@
             }
           } else if (story_list[i][1] == "NARRATION") {
             if (i > 0 && story_list[i - 1][1] != "NARRATION")
-              script_content = script_content + "<br/>";
+              script_content = script_content + "<br/>&nbsp;<br/>";
             script_content = script_content + "<span style=\"color: green;\">" + story_list[i][0].trim() + ".</span>";
             if (option == 3) {
               script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
