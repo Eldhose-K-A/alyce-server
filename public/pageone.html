@@ -290,17 +290,6 @@
       document.getElementById('timeline_section').style.display = "none";
       add_control_buttons_to_plot_rewrite_dashboard(plot_no);
       rewrite_element_1.innerHTML = "";
-      /*var rewrite_element_content = "";
-      for (i = story_list[plot_no][3].length - 1; i >= 0; --i) {
-        rewrite_element_content = rewrite_element_content + "<br/><label>";
-        rewrite_element_content = rewrite_element_content + "<input type=\"radio\" value=\"" + i +
-          "\"  class=\"with-gap\" name=\"plotno\"  onclick=\"set_as_plot(" + plot_no + "," + i + ")\"";
-        if(story_list[plot_no][0]==story_list[plot_no][3][i]){
-          rewrite_element_content = rewrite_element_content + " checked ";
-        }
-        rewrite_element_content = rewrite_element_content + " /><span>" + story_list[plot_no][3][i] + "</span></label>";
-      }
-      rewrite_element_2.innerHTML = rewrite_element_content;*/
       add_radio_buttons_to_plot_rewrite_dashboard(plot_no);
     }
 
@@ -353,11 +342,9 @@
 
       document.getElementById("log_section").style.display = "none";
       document.getElementById("rewrite_section").style.display = "none";
-      //open_rewrite_plot_dashboard(0);
 
       initiate_socket_connection();
 
-      // Event Listener to send data to server when user click submit button
       submit_button.onclick = function () {
         let input_data = input_story.value;
         if (input_data != "") {
@@ -498,7 +485,8 @@
           current_data_server = 2;
           if (rewrite_flag == true) {
             //rewrite_progress.innerHTML = "Started Creating New Plot Please Wait !.....";
-            rewrite_progress.classList.add("loader");
+            //document.getElementsByTagName("body")[0].classList.add("loader");
+            $("body").addClass('loader');
           }
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Started</b>";
         } else if (data.phase == 2 && data.procedureNo == 1 && data.status == "COMPLETED") {
@@ -506,13 +494,10 @@
             current_data_server = 0;
           if (rewrite_flag == true) {
             story_list[data.output[0][0]][3].push(data.output[0][1]);
-            /*rewrite_element_2.innerHTML = "<br/><label><input type=\"radio\" class=\"with-gap\" value=\"" + (
-                story_list[data.output[0][0]][3].length - 1) + "\" onclick=\"set_as_plot(" + data.output[0][0] +
-              "," + (story_list[data.output[0][0]][3].length - 1) + ")\" /><span>" + data.output[0][1] +
-              "</span></label>" + rewrite_element_2.innerHTML;*/
             add_radio_buttons_to_plot_rewrite_dashboard(data.output[0][0]);
             //rewrite_progress.innerHTML = "New Plot Generated !.....";
-            rewrite_progress.classList.remove("loader");
+            //rewrite_progress.classList.remove("loader");
+            $("body").removeClass('loader');
             rewrite_flag = false;
           } else {
             timeline_label[2].classList.remove("--is-inprogress");
