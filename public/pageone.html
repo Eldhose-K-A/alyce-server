@@ -302,14 +302,17 @@
           if (story_list[i][1] == "PLOT" && story_list[i][0] != "") {
             script_content = script_content + "<br/><h4 class='center-align'>Scene " + sceneno + "</h4>";
             sceneno = sceneno + 1;
-            script_content = script_content + "<span style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
+            script_content = script_content + "<div class='center-align'><span style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
             if (option == 2) {
               /*script_content = script_content + "&nbsp;<button class='btn waves-effect waves-light' onclick=\"open_rewrite_plot_dashboard(" + i +
                 ")\">Rewrite <i class='material-icons right'>edit</i></button>";*/
-              script_content = script_content + "&emsp;<a class='btn-floating btn-small waves-effect waves-light red editbuttonclass'><i class='material-icons' onclick='open_rewrite_plot_dashboard("+i+")'>edit</i></a><br/>&nbsp;<br/>";
+              script_content = script_content + "&emsp;<a class='btn-floating btn-small waves-effect waves-light red editbuttonclass'><i class='material-icons' onclick='open_rewrite_plot_dashboard("+i+")'>edit</i></a></div>&nbsp;<br/>";
             } else if (option == 3) {
-              script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
-                "' controls></audio>";
+              script_content = script_content + "<br/><audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+                "' controls></audio></div>&nbsp;<br/>";
+            }
+            else{
+              script_content = script_content + "</div>&nbsp;<br/>";
             }
           } else if (story_list[i][1] == "NARRATION") {
             if (i > 0 && story_list[i - 1][1] != "NARRATION")
@@ -322,10 +325,10 @@
           } else if (story_list[i][1] == "DIALOGUE") {
             if (i > 0 && story_list[i - 1][1] != "DIALOGUE")
               script_content = script_content + "<br/>&nbsp;";
-            script_content = script_content + "<br/><div class='center-align'><b>" + story_list[i][4].trim().toUpperCase() + "</b></div><br/><div class='center-align'><i>" + story_list[i][5].trim() + "</i></div>";
+            script_content = script_content + "<br/><div class='center-align'><b>" + story_list[i][4].trim().toUpperCase() + "</div><br/><div class='center-align'><i>" + story_list[i][5].trim() + "</i></div>";
             if (option == 3) {
-              script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
-                "' controls></audio>";
+              script_content = script_content + "<div class='center-align'><audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+                "' controls></audio></div>";
             }
             script_content = script_content + "<br/>";
           }
