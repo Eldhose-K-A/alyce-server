@@ -277,6 +277,7 @@
     function close_rewrite_plot_dashboard() {
       write_screenplay(2);
       timeline_content[2].innerHTML = script_content;
+      tippy('.editbuttonclass',{ content: "rewrite this plot" });
       rewrite_element_0.innerHTML = "";
       rewrite_element_1.innerHTML = "";
       rewrite_element_2.innerHTML = "";
@@ -311,7 +312,7 @@
                 "' controls></audio>";
             }
           } else if (story_list[i][1] == "NARRATION") {
-            if (i > 0 && story_list[i - 1] != "NARRATION")
+            if (i > 0 && story_list[i - 1][1] != "NARRATION")
               script_content = script_content + "<br/>";
             script_content = script_content + "<span style=\"color: green;\">" + story_list[i][0].trim() + "</span>";
             if (option == 3) {
@@ -319,7 +320,7 @@
                 "' controls></audio>";
             }
           } else if (story_list[i][1] == "DIALOGUE") {
-            if (i > 0 && story_list[i - 1] != "DIALOGUE")
+            if (i > 0 && story_list[i - 1][1] != "DIALOGUE")
               script_content = script_content + "<br/>";
             script_content = script_content + "<b>" + story_list[i][4].trim() + " : </b>" + story_list[i][5].trim();
             if (option == 3) {
@@ -345,7 +346,6 @@
 
       document.getElementById("log_section").style.display = "none";
       document.getElementById("rewrite_section").style.display = "none";
-      tippy('.editbuttonclass',{ content: "rewrite this plot" });
 
       initiate_socket_connection();
 
@@ -519,6 +519,7 @@
               JSON.stringify(story_list);
             write_screenplay(2);
             timeline_content[2].innerHTML = script_content;
+            tippy('.editbuttonclass',{ content: "rewrite this plot" });
           }
         } else if (data.phase == 3 && data.status == "STARTED") {
           current_phase = 3;
