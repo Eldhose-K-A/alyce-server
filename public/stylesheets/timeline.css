@@ -99,7 +99,8 @@
   margin: 20px 0 60px 60px;
   position: relative;
   padding: 20px;
-  background: #00AEEF;
+  /*background: #00AEEF;*/
+  border: 2px solid #00AEEF;
   color: #fff;
   border-radius: 5px;
   line-height: 20px;
@@ -117,7 +118,8 @@
   position: absolute;
   border-width: 15px 20px 15px 0;
   border-right-color: #00AEEF;
-  left: -15px;
+  /*left: -15px;*/
+  left: -20px;
   top: 10px;
   z-index: 0;
 }
