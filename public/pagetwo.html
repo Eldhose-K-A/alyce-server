@@ -259,7 +259,7 @@
       current_plotwords = [
         [plot_no, story_list[plot_no][2]]
       ];
-      //rewrite_element_2.innerHTML = rewrite_element_1.innerHTML + rewrite_element_2.innerHTML;
+      rewrite_element_2.innerHTML = rewrite_element_1.innerHTML + rewrite_element_2.innerHTML;
       rewrite_element_1.innerHTML = "";
       call_phase_2_step_2();
     }
@@ -507,10 +507,10 @@
             current_data_server = 0;
           if (rewrite_flag == true) {
             story_list[data.output[0][0]][3].push(data.output[0][1]);
-            rewrite_element_2.innerHTML = "<br/><label><input type=\"radio\" class=\"with-gap\" value=\"" + (
+            rewrite_element_1.innerHTML = "<br/><label><input type=\"radio\" class=\"with-gap\" value=\"" + (
                 story_list[data.output[0][0]][3].length - 1) + "\" onclick=\"set_as_plot(" + data.output[0][0] +
               "," + (story_list[data.output[0][0]][3].length - 1) + ")\" /><span>" + data.output[0][1] +
-              "</span></label>" + rewrite_element_2.innerHTML;
+              "</span></label>";
             //rewrite_progress.innerHTML = "New Plot Generated !.....";
             rewrite_progress.classList.remove("loader");
             rewrite_flag = false;
