@@ -308,23 +308,23 @@
                 ")\">Rewrite <i class='material-icons right'>edit</i></button>";*/
               script_content = script_content + "&emsp;<a class='btn-floating btn-small waves-effect waves-light red editbuttonclass'><i class='material-icons' onclick='open_rewrite_plot_dashboard("+i+")'>edit</i></a><br/>&nbsp;<br/>";
             } else if (option == 3) {
-              script_content = script_content + "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+              script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
                 "' controls></audio>";
             }
           } else if (story_list[i][1] == "NARRATION") {
             if (i > 0 && story_list[i - 1][1] != "NARRATION")
               script_content = script_content + "<br/>";
-            script_content = script_content + "<span style=\"color: green;\">" + story_list[i][0].trim() + "</span>";
+            script_content = script_content + "<span style=\"color: green;\">" + story_list[i][0].trim() + ".</span>";
             if (option == 3) {
-              script_content = script_content + "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+              script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
                 "' controls></audio>";
             }
           } else if (story_list[i][1] == "DIALOGUE") {
             if (i > 0 && story_list[i - 1][1] != "DIALOGUE")
-              script_content = script_content + "<br/>";
-            script_content = script_content + "<b>" + story_list[i][4].trim() + " : </b>" + story_list[i][5].trim();
+              script_content = script_content + "<br/>&nbsp;";
+            script_content = script_content + "<br/><b>" + story_list[i][4].trim() + " : </b>" + story_list[i][5].trim()+". ";
             if (option == 3) {
-              script_content = script_content + "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+              script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
                 "' controls></audio>";
             }
           }
