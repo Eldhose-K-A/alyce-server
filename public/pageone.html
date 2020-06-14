@@ -325,7 +325,7 @@
           } else if (story_list[i][1] == "DIALOGUE") {
             if (i > 0 && story_list[i - 1][1] != "DIALOGUE")
               script_content = script_content + "<br/>&nbsp;";
-            script_content = script_content + "<br/><div class='center-align storyfont'><b>" + story_list[i][4].trim().toUpperCase() + "</b></div><div class='center-align storyfont'><i>" + story_list[i][5].trim() + "</i></div>";
+            script_content = script_content + "<br/><div class='center-align'><b><span class='storyfont'>" + story_list[i][4].trim().toUpperCase() + "</span></b></div><div class='center-align'><span class='storyfont'><i>" + story_list[i][5].trim() + "</i></span></div>";
             if (option == 3) {
               script_content = script_content + "<div class='center-align'><audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
                 "' controls></audio></div>";
