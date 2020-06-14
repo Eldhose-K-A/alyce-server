@@ -300,7 +300,7 @@
       if (story_list != undefined) {
         for (i = 0; i < story_list.length; ++i) {
           if (story_list[i][1] == "PLOT" && story_list[i][0] != "") {
-            script_content = script_content + "<br/><h3 class='center-align'>SCENE : " + sceneno + "</h3>";
+            script_content = script_content + "<br/><h4 class='center-align'>Scene : " + sceneno + "</h4>";
             sceneno = sceneno + 1;
             script_content = script_content + "<span style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
             if (option == 2) {
@@ -322,7 +322,7 @@
           } else if (story_list[i][1] == "DIALOGUE") {
             if (i > 0 && story_list[i - 1][1] != "DIALOGUE")
               script_content = script_content + "<br/>&nbsp;";
-            script_content = script_content + "<br/><b>" + story_list[i][4].trim() + " : </b>" + story_list[i][5].trim()+". ";
+            script_content = script_content + "<br/><b>" + story_list[i][4].trim() + " : </b>" + story_list[i][5].trim();
             if (option == 3) {
               script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
                 "' controls></audio>";
