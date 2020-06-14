@@ -108,7 +108,7 @@
             <div class="paragraph__timeline__content-container">
               <div class="paragraph__timeline__content">
                 <div class="paragraph__timeline__title">Response #02</div>
-                <div id="progress_indicator_1" class="paragraph__timeline__info storyfont"></div>
+                <div id="progress_indicator_1" class="paragraph__timeline__info"></div>
                 <div class="paragraph__timeline__name">- Alyce Server</div>
                 <div class="paragraph__timeline__date-time">
                   <span class="paragraph__timeline__date">Step #2</span>
@@ -122,7 +122,7 @@
             <div class="paragraph__timeline__content-container">
               <div class="paragraph__timeline__content">
                 <div class="paragraph__timeline__title">Response #03</div>
-                <div id="progress_indicator_2" class="paragraph__timeline__info storyfont"></div>
+                <div id="progress_indicator_2" class="paragraph__timeline__info"></div>
                 <div class="paragraph__timeline__name">- Alyce Server</div>
                 <div class="paragraph__timeline__date-time">
                   <span class="paragraph__timeline__date">Step #3</span>
@@ -136,7 +136,7 @@
             <div class="paragraph__timeline__content-container">
               <div class="paragraph__timeline__content">
                 <div class="paragraph__timeline__title">Response #04</div>
-                <div id="progress_indicator_3" class="paragraph__timeline__info storyfont"></div>
+                <div id="progress_indicator_3" class="paragraph__timeline__info"></div>
                 <div class="paragraph__timeline__name">- Alyce Server</div>
                 <div class="paragraph__timeline__date-time">
                   <span class="paragraph__timeline__date">Step #4</span>
@@ -300,9 +300,9 @@
       if (story_list != undefined) {
         for (i = 0; i < story_list.length; ++i) {
           if (story_list[i][1] == "PLOT" && story_list[i][0] != "") {
-            script_content = script_content + "<br/>&nbsp;<h4 class='center-align'>SCENE " + sceneno + "</h4>";
+            script_content = script_content + "<br/>&nbsp;<h4 class='center-align storyfont'>SCENE " + sceneno + "</h4>";
             sceneno = sceneno + 1;
-            script_content = script_content + "<div class='center-align'><span style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
+            script_content = script_content + "<div class='center-align'><span class='storyfont' style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
             if (option == 2) {
               /*script_content = script_content + "&nbsp;<button class='btn waves-effect waves-light' onclick=\"open_rewrite_plot_dashboard(" + i +
                 ")\">Rewrite <i class='material-icons right'>edit</i></button>";*/
@@ -317,7 +317,7 @@
           } else if (story_list[i][1] == "NARRATION") {
             if (i > 0 && story_list[i - 1][1] != "NARRATION")
               script_content = script_content + "<br/>";
-            script_content = script_content + "<span style=\"color: green;\">" + story_list[i][0].trim() + ".</span>";
+            script_content = script_content + "<span class='storyfont' style=\"color: green;\">" + story_list[i][0].trim() + ".</span>";
             if (option == 3) {
               script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
                 "' controls></audio> ";
@@ -325,7 +325,7 @@
           } else if (story_list[i][1] == "DIALOGUE") {
             if (i > 0 && story_list[i - 1][1] != "DIALOGUE")
               script_content = script_content + "<br/>&nbsp;";
-            script_content = script_content + "<br/><div class='center-align'><b>" + story_list[i][4].trim().toUpperCase() + "</b></div><div class='center-align'><i>" + story_list[i][5].trim() + "</i></div>";
+            script_content = script_content + "<br/><div class='center-align storyfont'><b>" + story_list[i][4].trim().toUpperCase() + "</b></div><div class='center-align storyfont'><i>" + story_list[i][5].trim() + "</i></div>";
             if (option == 3) {
               script_content = script_content + "<div class='center-align'><audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
                 "' controls></audio></div>";
