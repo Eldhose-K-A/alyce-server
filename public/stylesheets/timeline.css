@@ -85,7 +85,7 @@
 }
 .paragraph__timeline__entry.--is-completed > span:before, .paragraph__timeline__entry.--is-completed > span:after {
   content: "\f00c";
-  background: rgb(35, 241, 39);
+  background: rgb(3, 98, 5);
 }
 .paragraph__timeline__entry.--is-inprogress > span:before, .paragraph__timeline__entry.--is-inprogress > span:after {
   content: "\f141";
