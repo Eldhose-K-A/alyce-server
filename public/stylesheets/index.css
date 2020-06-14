@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
 .loader {
     background-image: url(../images/loader.svg);
     background-size: auto;
@@ -13,4 +15,8 @@
 
 .fullscreen{
     min-height: 100vh;
+}
+
+.storyfont{
+    font-family: 'Special Elite', cursive !important;
 }
