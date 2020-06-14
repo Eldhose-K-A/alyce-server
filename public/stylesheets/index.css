@@ -4,6 +4,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     height: 100vh;
+    overflow: hidden;
 }
 
 .loader>* {
