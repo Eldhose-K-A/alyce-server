@@ -313,8 +313,8 @@
 
     function add_control_buttons_to_plot_rewrite_dashboard(plot_no) {
       rewrite_element_0.innerHTML = story_list[plot_no][0] +
-        "<br/>&nbsp;<br/><button class=\"btn waves-effect waves-light blue white-text\" onclick=\"rewrite_plot(" + plot_no +
-        ")\">Write New Plot<i class='material-icons right'>create</i></button>&emsp;<button class=\"btn waves-effect waves-light blue white-text\" onclick=\"close_rewrite_plot_dashboard()\">Done <i class='material-icons right'>done</i></button>"
+        "<br/>&nbsp;<br/><button class=\"btn btn-primary\" onclick=\"rewrite_plot(" + plot_no +
+        ")\">Write New Plot<i class='material-icons right'>create</i></button>&emsp;<button class=\"btn btn-primary\" onclick=\"close_rewrite_plot_dashboard()\">Done <i class='material-icons right'>done</i></button>"
     }
 
     function add_radio_buttons_to_plot_rewrite_dashboard(plot_no){
@@ -326,7 +326,7 @@
         if(story_list[plot_no][0]==story_list[plot_no][3][i]){
           rewrite_element_content = rewrite_element_content + " checked ";
         }
-        rewrite_element_content = rewrite_element_content + " /><span>" + story_list[plot_no][3][i] + "</span></label>";
+        rewrite_element_content = rewrite_element_content + " />&emsp;<span>" + story_list[plot_no][3][i] + "</span></label>";
       }
       rewrite_element_2.innerHTML = rewrite_element_content;
     }
@@ -377,7 +377,7 @@
             if (option == 2) {
               /*script_content = script_content + "&nbsp;<button class='btn waves-effect waves-light' onclick=\"open_rewrite_plot_dashboard(" + i +
                 ")\">Rewrite <i class='material-icons right'>edit</i></button>";*/
-              script_content = script_content + "&emsp;<a class='btn btn-primary editbuttonclass' onclick='open_rewrite_plot_dashboard("+i+")'>edit</a></div>&nbsp;<br/>";
+              script_content = script_content + "&emsp;<a style=\"border-radius: 50%; color: white;\" class='btn btn-primary btn-sm editbuttonclass' onclick='open_rewrite_plot_dashboard("+i+")'><i class=\"material-icons\">edit</i></a></div>&nbsp;<br/>";
             } else if (option == 3) {
               script_content = script_content + "<br/><audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
                 "' controls></audio></div>&nbsp;<br/>";
