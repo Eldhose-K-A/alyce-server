@@ -346,7 +346,7 @@
       rewrite_progress.innerHTML = "";
       document.getElementById('rewrite_section').style.display = "none";
       document.getElementById('timeline_section').style.display = "block";
-      $("#timeline_section").get(0).scrollIntoView({behavior: "smooth"});
+      $("#phase02").get(0).scrollIntoView({behavior: "smooth"});
     }
 
     function open_rewrite_plot_dashboard(plot_no) {
@@ -421,6 +421,7 @@
         if (input_data != "") {
           story = input_data;
           document.getElementById('input_section').style.display = "none";
+          $("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
           call_phase_1_step_1();
         } else {
           window.alert("No Input Data!...");
