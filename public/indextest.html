@@ -314,7 +314,7 @@
     function add_control_buttons_to_plot_rewrite_dashboard(plot_no) {
       rewrite_element_0.innerHTML = story_list[plot_no][0] +
         "<br/>&nbsp;<br/><button class=\"btn btn-primary\" onclick=\"rewrite_plot(" + plot_no +
-        ")\">Write New Plot<i class='material-icons right'>create</i></button>&emsp;<button class=\"btn btn-primary\" onclick=\"close_rewrite_plot_dashboard()\">Done <i class='material-icons right'>done</i></button>"
+        ")\">Write New Plot</button>&emsp;<button class=\"btn btn-primary\" onclick=\"close_rewrite_plot_dashboard()\">Done</button>"
     }
 
     function add_radio_buttons_to_plot_rewrite_dashboard(plot_no){
@@ -564,7 +564,7 @@
           if (rewrite_flag == true) {
             //rewrite_progress.innerHTML = "Started Creating New Plot Please Wait !.....";
             //document.getElementsByTagName("body")[0].classList.add("loader");
-            $("body").addClass('loader');
+            $("#rewrite_section").addClass('loader');
           }
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Started</b>";
         } else if (data.phase == 2 && data.procedureNo == 1 && data.status == "COMPLETED") {
@@ -575,7 +575,7 @@
             add_radio_buttons_to_plot_rewrite_dashboard(data.output[0][0]);
             //rewrite_progress.innerHTML = "New Plot Generated !.....";
             //rewrite_progress.classList.remove("loader");
-            $("body").removeClass('loader');
+            $("#rewrite_section").removeClass('loader');
             rewrite_flag = false;
           } else {
             timeline_label[2].classList.remove("--is-inprogress");
