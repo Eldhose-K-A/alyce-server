@@ -56,7 +56,7 @@
         </div>
       </div>
       <div class="text-center">
-        <a href="#input_section">Start Writing</a>
+        <a class="btn btn-primary btn-sm" onclick="$('#input_section').get(0).scrollIntoView({behavior: 'smooth'});">Start Writing</a>
       </div>
     </div>
   </section>
@@ -346,6 +346,7 @@
       rewrite_progress.innerHTML = "";
       document.getElementById('rewrite_section').style.display = "none";
       document.getElementById('timeline_section').style.display = "block";
+      $("#timeline_section").get(0).scrollIntoView({behavior: "smooth"});
     }
 
     function open_rewrite_plot_dashboard(plot_no) {
@@ -354,6 +355,7 @@
       add_control_buttons_to_plot_rewrite_dashboard(plot_no);
       rewrite_element_1.innerHTML = "";
       add_radio_buttons_to_plot_rewrite_dashboard(plot_no);
+      $("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
     }
 
     function write_screenplay(option) {
@@ -362,7 +364,7 @@
       if (story_list != undefined) {
         for (i = 0; i < story_list.length; ++i) {
           if (story_list[i][1] == "PLOT" && story_list[i][0] != "") {
-            script_content = script_content + "<br/>&nbsp;<br/>&nbsp;<h4 class='text-center storyfont'>SCENE " + sceneno + "</h4>";
+            script_content = script_content + "<br/>&nbsp;<br/>&nbsp;&nbsp;<br/>&nbsp;<br/><h4 class='text-center storyfont'>SCENE " + sceneno + "</h4>";
             sceneno = sceneno + 1;
             script_content = script_content + "<div class='text-center'><span class='storyfont' style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
             if (option == 2) {
@@ -567,6 +569,7 @@
             //rewrite_progress.classList.remove("loader");
             $("#rewrite_section").removeClass('loader');
             rewrite_flag = false;
+            $("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
           } else {
             timeline_label[2].classList.remove("--is-inprogress");
             timeline_label[2].classList.add("--is-completed");
