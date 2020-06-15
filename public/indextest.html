@@ -371,7 +371,7 @@
       if (story_list != undefined) {
         for (i = 0; i < story_list.length; ++i) {
           if (story_list[i][1] == "PLOT" && story_list[i][0] != "") {
-            script_content = script_content + "<br/>&nbsp;<h4 class='text-center storyfont'>SCENE " + sceneno + "</h4>";
+            script_content = script_content + "<br/>&nbsp;<br/>&nbsp;<h4 class='text-center storyfont'>SCENE " + sceneno + "</h4>";
             sceneno = sceneno + 1;
             script_content = script_content + "<div class='text-center'><span class='storyfont' style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
             if (option == 2) {
@@ -415,7 +415,6 @@
     }
 
     $(document).ready(function () {
-      $("body").removeClass('loader');
 
       re_initialize_timeline();
 
