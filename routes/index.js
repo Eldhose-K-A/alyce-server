@@ -3,9 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  //req.session.sid = "Hi Socket!...";
-  //res.render('index', { title: 'Express' });
-  res.redirect('/pageone.html');
+  res.redirect('/implementation/home');
 });
 
 module.exports = router;

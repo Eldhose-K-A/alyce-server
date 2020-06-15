@@ -8,8 +8,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     media="screen,projection">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/timeline.css" />
-  <link rel="stylesheet" type="text/css" href="/stylesheets/index.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/timeline.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/index.css" />
   <style>
     label.active {
       color: #007bff !important;
@@ -38,16 +38,6 @@
   <!-- Content Input Section -->
   <section id="input_section" class="fullscreen">
     <div class="container">
-      <!-- <div class="row">
-        <div class="col-12">
-          &nbsp;
-          <form>
-            <label for="">Story Input Section</label>
-            <textarea class="form-control" id="" style="min-height: 50vh;"
-              placeholder="Paste your story here!..."></textarea>
-          </form>
-        </div>
-      </div> -->
       <div class="row">
         <form class="col s12">
           <div class="row">
@@ -60,13 +50,13 @@
       </div>
       <div class="row">
         <div class="col s12 m6 l4 offset-l2 center-align">
-          <!-- <button type="button" class=""></button> -->
+          &nbsp;<br/>
           <button class="btn waves-effect waves-light blue white-text" id="fetch_input_story">Fetch Sample
             <i class="material-icons right">content_paste</i>
           </button>
         </div>
         <div class="col s12 m6 l4 center-align">
-          <!-- <button type="button" class="btn">Send</button> -->
+          &nbsp;<br/>
           <button class="btn waves-effect waves-light blue white-text" id="submit_input_story">&nbsp;&nbsp;&nbsp;Submit
             <i class="material-icons right">send</i>&nbsp;&nbsp;&nbsp;
           </button>
@@ -241,57 +231,12 @@
     }
 
     function add_control_buttons_to_plot_rewrite_dashboard(plot_no) {
-      /*rewrite_element_0.innerHTML = story_list[plot_no][0] +
-        "<br/>&nbsp;<br/><input type=\"button\" class=\"btn waves-effect waves-light\" value=\"Write New Plot\" onclick=\"rewrite_plot(" + plot_no +
-        ")\" />&emsp;<input type=\"button\" class=\"btn waves-effect waves-light\" value=\"Back to Home\" onclick=\"close_rewrite_plot_dashboard()\"/>"; */
       rewrite_element_0.innerHTML = story_list[plot_no][0] +
         "<br/>&nbsp;<br/><button class=\"btn waves-effect waves-light blue white-text\" onclick=\"rewrite_plot(" + plot_no +
         ")\">Write New Plot<i class='material-icons right'>create</i></button>&emsp;<button class=\"btn waves-effect waves-light blue white-text\" onclick=\"close_rewrite_plot_dashboard()\">Done <i class='material-icons right'>done</i></button>"
     }
 
-    function set_as_plot(plot_no, sublist_index) {
-      story_list[plot_no][0] = story_list[plot_no][3][sublist_index];
-      add_control_buttons_to_plot_rewrite_dashboard(plot_no);
-    }
-
-    function rewrite_plot(plot_no) {
-      rewrite_flag = true;
-      current_plotwords = [
-        [plot_no, story_list[plot_no][2]]
-      ];
-      rewrite_element_2.innerHTML = rewrite_element_1.innerHTML + rewrite_element_2.innerHTML;
-      rewrite_element_1.innerHTML = "";
-      call_phase_2_step_2();
-    }
-
-    function close_rewrite_plot_dashboard() {
-      write_screenplay(2);
-      timeline_content[2].innerHTML = script_content;
-      rewrite_element_0.innerHTML = "";
-      rewrite_element_1.innerHTML = "";
-      rewrite_element_2.innerHTML = "";
-      rewrite_progress.innerHTML = "";
-      document.getElementById('rewrite_section').style.display = "none";
-      document.getElementById('timeline_section').style.display = "block";
-    }
-
-    function open_rewrite_plot_dashboard(plot_no) {
-      document.getElementById('rewrite_section').style.display = "block";
-      document.getElementById('timeline_section').style.display = "none";
-
-      //------------------------------------
-      /*story_list = [
-        ["aaaa", "PLOT", [],
-          ["bbbb", "cccc", "aaaa", "dddd", "eeee"]
-        ]
-      ];*/
-      //------------------------------------
-
-      /*rewrite_element_0.innerHTML =  story_list[plot_no][0] +
-        "<br/>&nbsp;<br/><input type=\"button\" class=\"btn waves-effect waves-light\" value=\"Write New Plot<iclass='material-icons right'>create</i>\" onclick=\"rewrite_plot(" + plot_no +
-        ")\" />&emsp;<input type=\"button\" class=\"btn waves-effect waves-light\" value=\"Back to Home\" onclick=\"close_rewrite_plot_dashboard()\"/>";*/
-      add_control_buttons_to_plot_rewrite_dashboard(plot_no);
-      rewrite_element_1.innerHTML = "";
+    function add_radio_buttons_to_plot_rewrite_dashboard(plot_no){
       var rewrite_element_content = "";
       for (i = story_list[plot_no][3].length - 1; i >= 0; --i) {
         rewrite_element_content = rewrite_element_content + "<br/><label>";
@@ -305,43 +250,84 @@
       rewrite_element_2.innerHTML = rewrite_element_content;
     }
 
+    function set_as_plot(plot_no, sublist_index) {
+      story_list[plot_no][0] = story_list[plot_no][3][sublist_index];
+      add_control_buttons_to_plot_rewrite_dashboard(plot_no);
+    }
+
+    function rewrite_plot(plot_no) {
+      rewrite_flag = true;
+      current_plotwords = [
+        [plot_no, story_list[plot_no][2]]
+      ];
+      rewrite_element_1.innerHTML = "";
+      call_phase_2_step_2();
+    }
+
+    function close_rewrite_plot_dashboard() {
+      write_screenplay(2);
+      timeline_content[2].innerHTML = script_content;
+      tippy('.editbuttonclass',{ content: "rewrite this plot" });
+      rewrite_element_0.innerHTML = "";
+      rewrite_element_1.innerHTML = "";
+      rewrite_element_2.innerHTML = "";
+      rewrite_progress.innerHTML = "";
+      document.getElementById('rewrite_section').style.display = "none";
+      document.getElementById('timeline_section').style.display = "block";
+    }
+
+    function open_rewrite_plot_dashboard(plot_no) {
+      document.getElementById('rewrite_section').style.display = "block";
+      document.getElementById('timeline_section').style.display = "none";
+      add_control_buttons_to_plot_rewrite_dashboard(plot_no);
+      rewrite_element_1.innerHTML = "";
+      add_radio_buttons_to_plot_rewrite_dashboard(plot_no);
+    }
+
     function write_screenplay(option) {
       script_content = "";
       sceneno = 1;
       if (story_list != undefined) {
         for (i = 0; i < story_list.length; ++i) {
           if (story_list[i][1] == "PLOT" && story_list[i][0] != "") {
-            script_content = script_content + "<h3>SCENE : " + sceneno + "</h3>";
+            script_content = script_content + "<br/>&nbsp;<h4 class='center-align storyfont'>SCENE " + sceneno + "</h4>";
             sceneno = sceneno + 1;
-            script_content = script_content + "<span style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
+            script_content = script_content + "<div class='center-align'><span class='storyfont' style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
             if (option == 2) {
-              script_content = script_content + "&nbsp;<button onclick=\"open_rewrite_plot_dashboard(" + i +
-                ")\">Rewrite</button>";
+              /*script_content = script_content + "&nbsp;<button class='btn waves-effect waves-light' onclick=\"open_rewrite_plot_dashboard(" + i +
+                ")\">Rewrite <i class='material-icons right'>edit</i></button>";*/
+              script_content = script_content + "&emsp;<a class='btn-floating btn-small waves-effect waves-light red editbuttonclass'><i class='material-icons' onclick='open_rewrite_plot_dashboard("+i+")'>edit</i></a></div>&nbsp;<br/>";
             } else if (option == 3) {
-              script_content = script_content + "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
-                "' controls></audio>";
+              script_content = script_content + "<br/><audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+                "' controls></audio></div>&nbsp;<br/>";
+            }
+            else{
+              script_content = script_content + "</div>&nbsp;<br/>";
             }
           } else if (story_list[i][1] == "NARRATION") {
-            if (i > 0 && story_list[i - 1] != "NARRATION")
+            if (i > 0 && story_list[i - 1][1] != "NARRATION")
               script_content = script_content + "<br/>";
-            script_content = script_content + "<span style=\"color: green;\">" + story_list[i][0].trim() + "</span>";
+            script_content = script_content + "<span class='storyfont' style=\"color: green;\">" + story_list[i][0].trim() + ".</span>";
             if (option == 3) {
-              script_content = script_content + "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
-                "' controls></audio>";
+              script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+                "' controls></audio> ";
             }
           } else if (story_list[i][1] == "DIALOGUE") {
-            if (i > 0 && story_list[i - 1] != "DIALOGUE")
-              script_content = script_content + "<br/>";
-            script_content = script_content + "<b>" + story_list[i][4].trim() + " : </b>" + story_list[i][5].trim();
+            if (i > 0 && story_list[i - 1][1] != "DIALOGUE")
+              script_content = script_content + "<br/>&nbsp;";
+            script_content = script_content + "<br/><div class='center-align'><b><span class='storyfont'>" + story_list[i][4].trim().toUpperCase() + "</span></b></div><div class='center-align'><div style='display: inline-block; width: 20vw;'><i class='storyfont'>" + story_list[i][5].trim() + "</i></div></div>";
             if (option == 3) {
-              script_content = script_content + "<audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
-                "' controls></audio>";
+              script_content = script_content + "<div class='center-align'><audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+                "' controls></audio></div>";
             }
+            script_content = script_content + "<br/>";
           }
         }
         if (option == 2) {
           script_content = script_content +
-            "<br/>&nbsp;<br/>&nbsp;<br/><button onclick=\"call_phase_3_step_1()\">Generate Audio Transcript</button>";
+            "<div class='center-align'>" +
+            "<br/>&nbsp;<br/>&nbsp;<br/><button id='generate_audio_button' class='btn waves-effect waves-light blue white-text' onclick=\"call_phase_3_step_1()\">Generate Audio Transcript <i class='material-icons right'>music_note</i></button>" +
+            "</div>";
         }
       }
       logger_element.innerHTML = logger_element.innerHTML + script_content;
@@ -354,11 +340,9 @@
 
       document.getElementById("log_section").style.display = "none";
       document.getElementById("rewrite_section").style.display = "none";
-      //open_rewrite_plot_dashboard(0);
 
       initiate_socket_connection();
 
-      // Event Listener to send data to server when user click submit button
       submit_button.onclick = function () {
         let input_data = input_story.value;
         if (input_data != "") {
@@ -373,7 +357,7 @@
       // Code to fetch a sample story on Clicking Fetch Button
       $("#fetch_input_story").click(function () {
         $.ajax({
-          url: "/story/story01.txt",
+          url: "story/story01.txt",
           success: function (result) {
             $("#input_story").html(result);
             M.textareaAutoResize($('#input_story'));
@@ -423,6 +407,7 @@
         }
 
         call_phase_3_step_1 = function () {
+          timeline_content[3].innerHTML = "";
           socket.emit("client-to-server", {
             "phase": 3,
             "procedureNo": 0,
@@ -499,7 +484,8 @@
           current_data_server = 2;
           if (rewrite_flag == true) {
             //rewrite_progress.innerHTML = "Started Creating New Plot Please Wait !.....";
-            rewrite_progress.classList.add("loader");
+            //document.getElementsByTagName("body")[0].classList.add("loader");
+            $("body").addClass('loader');
           }
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Started</b>";
         } else if (data.phase == 2 && data.procedureNo == 1 && data.status == "COMPLETED") {
@@ -507,12 +493,10 @@
             current_data_server = 0;
           if (rewrite_flag == true) {
             story_list[data.output[0][0]][3].push(data.output[0][1]);
-            rewrite_element_1.innerHTML = "<br/><label><input type=\"radio\" class=\"with-gap\" value=\"" + (
-                story_list[data.output[0][0]][3].length - 1) + "\" onclick=\"set_as_plot(" + data.output[0][0] +
-              "," + (story_list[data.output[0][0]][3].length - 1) + ")\" /><span>" + data.output[0][1] +
-              "</span></label>";
+            add_radio_buttons_to_plot_rewrite_dashboard(data.output[0][0]);
             //rewrite_progress.innerHTML = "New Plot Generated !.....";
-            rewrite_progress.classList.remove("loader");
+            //rewrite_progress.classList.remove("loader");
+            $("body").removeClass('loader');
             rewrite_flag = false;
           } else {
             timeline_label[2].classList.remove("--is-inprogress");
@@ -530,6 +514,7 @@
               JSON.stringify(story_list);
             write_screenplay(2);
             timeline_content[2].innerHTML = script_content;
+            tippy('.editbuttonclass',{ content: "rewrite this plot" });
           }
         } else if (data.phase == 3 && data.status == "STARTED") {
           current_phase = 3;
