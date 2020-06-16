@@ -296,7 +296,7 @@
     function add_control_buttons_to_plot_rewrite_dashboard(plot_no) {
       rewrite_element_0.innerHTML = story_list[plot_no][0] +
         "<br/>&nbsp;<br/><button class=\"btn btn-primary\" onclick=\"rewrite_plot(" + plot_no +
-        ")\">Write New Plot</button>&emsp;<button class=\"btn btn-primary\" onclick=\"close_rewrite_plot_dashboard()\">Done</button>"
+        ")\">Write New Plot <i class=\"ri-add-line\"></i></button>&emsp;<button class=\"btn btn-primary\" onclick=\"close_rewrite_plot_dashboard()\">Done <i class=\"ri-check-fill\"></i></button>"
     }
 
     function add_radio_buttons_to_plot_rewrite_dashboard(plot_no){
@@ -391,7 +391,7 @@
         if (option == 2) {
           script_content = script_content +
             "<div class='text-center'>" +
-            "<br/>&nbsp;<br/>&nbsp;<br/><button id='generate_audio_button' class='btn btn-primary' onclick=\"call_phase_3_step_1()\">Generate Audio Transcript</button>" +
+            "<br/>&nbsp;<br/>&nbsp;<br/><button id='generate_audio_button' class='btn btn-primary' onclick=\"call_phase_3_step_1()\">Generate Audio Transcript <i class=\"ri-music-fill\"></i></button>" +
             "</div>";
         }
       }
