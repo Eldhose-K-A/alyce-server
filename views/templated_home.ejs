@@ -327,6 +327,8 @@
       rewrite_element_1.innerHTML = "";
       document.getElementById('rewrite_button').disabled = true;
       document.getElementById('close_rewrite_button').disabled = true;
+      $("#rewrite_section").addClass('loader');
+      $("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
       call_phase_2_step_2();
     }
 
@@ -560,7 +562,7 @@
             //rewrite_progress.innerHTML = "Started Creating New Plot Please Wait !.....";
             //document.getElementsByTagName("body")[0].classList.add("loader");
             $("#rewrite_section").addClass('loader');
-            $("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
+            //$("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
           }
           logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Started</b>";
         } else if (data.phase == 2 && data.procedureNo == 1 && data.status == "COMPLETED") {
