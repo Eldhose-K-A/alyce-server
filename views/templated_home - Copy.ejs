@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Alyce : An A.I fine tuned screenplay writer</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="stylesheets/timeline.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/index.css" />
+  <style>
+    .blue-text{
+      color: #00AEEF;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo mr-auto"><a href="http://alyce.southeastasia.cloudapp.azure.com" target="_blank">Alyce</a></h1>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="http://alyce.southeastasia.cloudapp.azure.com" target="_blank">Back To Home</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container position-relative" style="padding-top: 15px;" data-aos="fade-up" data-aos-delay="100">
+      <div class="row justify-content-center">
+        <div class="col-xl-7 col-lg-9 text-center">
+          <h1>Alyce Garner Peterson</h1>
+          <h5>An A.I fine tuned screenplay writer</h5>
+        </div>
+      </div>
+      <div class="text-center">
+        <a class="btn btn-primary btn-sm" style="color: white; border-radius: 30px;" onclick="$('#input_section').get(0).scrollIntoView({behavior: 'smooth'});">&nbsp;&nbsp;&nbsp;Start Writing&nbsp;&nbsp;&nbsp;<br><i class="ri-arrow-down-s-fill"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <main id="main">
+    <section class="fullscreen" id="input_section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <br />&nbsp;<br />
+          </div>
+          <div class="col-12">
+            <h3 class="text-center">INPUT SECTION</h3>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="input_story">Write your story here :-</label>
+              <textarea id="input_story" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-4 offset-lg-2 text-center">
+            &nbsp;<br />
+            <button class="btn btn-primary" id="fetch_input_story">Fetch Sample <i class="ri-clipboard-fill"></i></button>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 text-center">
+            &nbsp;<br />
+            <button class="btn btn-primary" id="submit_input_story">&nbsp;&nbsp;&nbsp;Submit&nbsp;&nbsp;&nbsp;<i class="ri-send-plane-2-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="timeline_section" class="fullscreen">
+      <div class="paragraph__content-container">
+        <h1>Process Overview</h1>
+        <div class="paragraph__timeline">
+          <div class="paragraph__timeline__container">
+            <div id="phase00" class="paragraph__timeline__entry --entry-1 --is-pending">
+              <span></span>
+              <div class="paragraph__timeline__content-container">
+                <div class="paragraph__timeline__content">
+                  <div class="paragraph__timeline__title">Response #01</div>
+                  <div id="progress_indicator_0" class="paragraph__timeline__info"></div>
+                  <div class="paragraph__timeline__name">- Alyce Server</div>
+                  <div class="paragraph__timeline__date-time">
+                    <span class="paragraph__timeline__date">Step #1</span>
+                    <span class="paragraph__timeline__time">Story<br />Received</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="phase01" class="paragraph__timeline__entry --entry-1 --is-pending">
+              <span></span>
+              <div class="paragraph__timeline__content-container">
+                <div class="paragraph__timeline__content">
+                  <div class="paragraph__timeline__title">Response #02</div>
+                  <div id="progress_indicator_1" class="paragraph__timeline__info"></div>
+                  <div class="paragraph__timeline__name">- Alyce Server</div>
+                  <div class="paragraph__timeline__date-time">
+                    <span class="paragraph__timeline__date">Step #2</span>
+                    <span class="paragraph__timeline__time">Co-reference<br />Resolution</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="phase02" class="paragraph__timeline__entry --entry-1 --is-pending">
+              <span></span>
+              <div class="paragraph__timeline__content-container">
+                <div class="paragraph__timeline__content">
+                  <div class="paragraph__timeline__title">Response #03</div>
+                  <div id="progress_indicator_2" class="paragraph__timeline__info"></div>
+                  <div class="paragraph__timeline__name">- Alyce Server</div>
+                  <div class="paragraph__timeline__date-time">
+                    <span class="paragraph__timeline__date">Step #3</span>
+                    <span class="paragraph__timeline__time">Plot<br />Generation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="phase03" class="paragraph__timeline__entry --entry-1 --is-pending">
+              <span></span>
+              <div class="paragraph__timeline__content-container">
+                <div class="paragraph__timeline__content">
+                  <div class="paragraph__timeline__title">Response #04</div>
+                  <div id="progress_indicator_3" class="paragraph__timeline__info"></div>
+                  <div class="paragraph__timeline__name">- Alyce Server</div>
+                  <div class="paragraph__timeline__date-time">
+                    <span class="paragraph__timeline__date">Step #4</span>
+                    <span class="paragraph__timeline__time">Audio<br />Generation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="rewrite_section" class="fullscreen">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="text-center">Plot Rewrite Section</h2>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <b class="blue-text">CURRENTLY SELECTED PLOT : </b><span id="rewrite_element_0"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <span id="rewrite_element_1"></span>
+              <span id="rewrite_element_2"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div id="rewrite_progress"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="log_section" class="fullscreen">
+      <h2>LOG SECTION</h2>
+      <div id="log_element"></div>
+    </section>
+
+  </main>
+
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Department of CSE</h3>
+            <p>
+              Muthoot Institute of<br>
+              Technology and Science<br>
+              Varikoli P.O, India<br><br>
+              <strong>Email:</strong> <a href="mailto:alycegarnerpeterson@gmail.com"
+                target="_blank">alycegarnerpeterson@gmail.com</a><br>
+            </p>
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="http://alyce.southeastasia.cloudapp.azure.com" target="_blank">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/alyce-garner-peterson"
+                target="_blank">Github</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-7 col-md-6 footer-links">
+            <h4>&nbsp;</h4>
+            <ul>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container d-md-flex py-4">
+      <div class="mr-md-auto text-center text-md-left">
+        <div class="copyright">
+          &copy; Copyright <strong><span>OnePage</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/" target="_blank">BootstrapMade</a>
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="https://github.com/alyce-garner-peterson" target="_blank" class="github"><i
+            class="bx bxl-github"></i></a>
+        &emsp;&emsp;
+      </div>
+    </div>
+  </footer>
+  <div id="preloader"></div>
+
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="https://unpkg.com/tippy.js@4"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="assets/js/main2.js"></script>
+
+  <script>
+    var rewrite_flag = false;
+    var story = undefined;
+    var story_list = undefined;
+    var script_content = "";
+    var audio_file_names = undefined;
+    var plot_index_list = [];
+    var current_plotwords = [];
+    var current_phase = 0;
+    var current_data_server = 0;
+    var active_clients = 0;
+    var no_of_p1_servers = 0;
+    var no_of_p2_servers = 0;
+    var no_of_p3_servers = 0;
+    var input_story = document.getElementById("input_story");
+    var submit_button = document.getElementById("submit_input_story");
+    var rewrite_progress = document.getElementById("rewrite_progress");
+    var rewrite_element_0 = document.getElementById("rewrite_element_0");
+    var rewrite_element_1 = document.getElementById("rewrite_element_1");
+    var rewrite_element_2 = document.getElementById("rewrite_element_2");
+    var logger_element = document.getElementById("log_element");
+    var call_phase_1_step_1 = undefined;
+    var call_phase_2_step_1 = undefined;
+    var call_phase_2_step_2 = undefined;
+    var call_phase_3_step_1 = undefined;
+    var timeline_label = [document.getElementById("phase00"), document.getElementById("phase01"), document
+      .getElementById("phase02"), document.getElementById("phase03")
+    ];
+    var timeline_content = [document.getElementById("progress_indicator_0"), document.getElementById(
+      "progress_indicator_1"), document.getElementById("progress_indicator_2"), document.getElementById(
+      "progress_indicator_3")];
+
+    // Code to Set the Tool tip of Timeline correctly
+    function re_initialize_timeline() {
+      tippy('.--is-completed', {
+        content: 'Completed',
+        placement: 'top'
+      });
+      tippy('.--is-inprogress', {
+        content: 'In Progress',
+        placement: 'top'
+      });
+      tippy('.--is-pending', {
+        content: 'Pending',
+        placement: 'top'
+      });
+    }
+
+    function add_control_buttons_to_plot_rewrite_dashboard(plot_no) {
+      rewrite_element_0.innerHTML = story_list[plot_no][0] +
+        "<br/>&nbsp;<br/><button class=\"btn btn-primary\" onclick=\"rewrite_plot(" + plot_no +
+        ")\">Write New Plot&nbsp;&nbsp;<i class=\"ri-add-line\"></i></button>&emsp;<button class=\"btn btn-primary\" onclick=\"close_rewrite_plot_dashboard()\">Done&nbsp;&nbsp;<i class=\"ri-check-fill\"></i></button>"
+    }
+
+    function add_radio_buttons_to_plot_rewrite_dashboard(plot_no){
+      var rewrite_element_content = "";
+      for (i = story_list[plot_no][3].length - 1; i >= 0; --i) {
+        rewrite_element_content = rewrite_element_content + "<br/><label>";
+        rewrite_element_content = rewrite_element_content + "<input type=\"radio\" value=\"" + i +
+          "\"  class=\"with-gap\" name=\"plotno\"  onclick=\"set_as_plot(" + plot_no + "," + i + ")\"";
+        if(story_list[plot_no][0]==story_list[plot_no][3][i]){
+          rewrite_element_content = rewrite_element_content + " checked ";
+        }
+        rewrite_element_content = rewrite_element_content + " />&emsp;<span>" + story_list[plot_no][3][i] + "</span></label>";
+      }
+      rewrite_element_2.innerHTML = rewrite_element_content;
+    }
+
+    function set_as_plot(plot_no, sublist_index) {
+      story_list[plot_no][0] = story_list[plot_no][3][sublist_index];
+      add_control_buttons_to_plot_rewrite_dashboard(plot_no);
+    }
+
+    function rewrite_plot(plot_no) {
+      rewrite_flag = true;
+      current_plotwords = [
+        [plot_no, story_list[plot_no][2]]
+      ];
+      rewrite_element_1.innerHTML = "";
+      call_phase_2_step_2();
+    }
+
+    function close_rewrite_plot_dashboard() {
+      write_screenplay(2);
+      timeline_content[2].innerHTML = script_content;
+      tippy('.editbuttonclass',{ content: "rewrite this plot" });
+      rewrite_element_0.innerHTML = "";
+      rewrite_element_1.innerHTML = "";
+      rewrite_element_2.innerHTML = "";
+      rewrite_progress.innerHTML = "";
+      document.getElementById('rewrite_section').style.display = "none";
+      document.getElementById('timeline_section').style.display = "block";
+      $("#phase02").get(0).scrollIntoView({behavior: "smooth"});
+    }
+
+    function open_rewrite_plot_dashboard(plot_no) {
+      document.getElementById('rewrite_section').style.display = "block";
+      document.getElementById('timeline_section').style.display = "none";
+      add_control_buttons_to_plot_rewrite_dashboard(plot_no);
+      rewrite_element_1.innerHTML = "";
+      add_radio_buttons_to_plot_rewrite_dashboard(plot_no);
+      $("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
+    }
+
+    function write_screenplay(option) {
+      script_content = "";
+      sceneno = 1;
+      if (story_list != undefined) {
+        for (i = 0; i < story_list.length; ++i) {
+          if (story_list[i][1] == "PLOT" && story_list[i][0] != "") {
+            script_content = script_content + "<br/>&nbsp;<br/>&nbsp;&nbsp;<br/>&nbsp;<br/><h4 class='text-center storyfont'>SCENE " + sceneno + "</h4>";
+            sceneno = sceneno + 1;
+            script_content = script_content + "<div class='text-center'><span class='storyfont' style=\"color: red;\">" + story_list[i][0].trim() + "</span>";
+            if (option == 2) {
+              /*script_content = script_content + "&nbsp;<button class='btn waves-effect waves-light' onclick=\"open_rewrite_plot_dashboard(" + i +
+                ")\">Rewrite <i class='material-icons right'>edit</i></button>";*/
+              script_content = script_content + "&emsp;<a style=\"border-radius: 50%; color: white;\" class='btn btn-danger btn-sm editbuttonclass' onclick='open_rewrite_plot_dashboard("+i+")'><i class=\"material-icons\">edit</i></a></div>&nbsp;<br/>";
+            } else if (option == 3) {
+              script_content = script_content + "<br/><audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+                "' controls></audio></div>&nbsp;<br/>";
+            }
+            else{
+              script_content = script_content + "</div>&nbsp;<br/>";
+            }
+          } else if (story_list[i][1] == "NARRATION") {
+            if (i > 0 && story_list[i - 1][1] != "NARRATION")
+              script_content = script_content + "<br/>";
+            script_content = script_content + "<span class='storyfont' style=\"color: green;\">" + story_list[i][0].trim() + ".</span>";
+            if (option == 3) {
+              script_content = script_content + " <audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+                "' controls></audio> ";
+            }
+          } else if (story_list[i][1] == "DIALOGUE") {
+            if (i > 0 && story_list[i - 1][1] != "DIALOGUE")
+              script_content = script_content + "<br/>&nbsp;";
+            script_content = script_content + "<br/><div class='text-center'><b><span class='storyfont'>" + story_list[i][4].trim().toUpperCase() + "</span></b></div><div class='text-center'><div style='display: inline-block; width: 20vw;'><i class='storyfont'>" + story_list[i][5].trim() + "</i></div></div>";
+            if (option == 3) {
+              script_content = script_content + "<div class='text-center'><audio style=\"height: 15px;\" src='/audio/" + audio_file_names[i] +
+                "' controls></audio></div>";
+            }
+            script_content = script_content + "<br/>";
+          }
+        }
+        if (option == 2) {
+          script_content = script_content +
+            "<div class='text-center'>" +
+            "<br/>&nbsp;<br/>&nbsp;<br/><button id='generate_audio_button' class='btn btn-primary' onclick=\"call_phase_3_step_1()\">Generate Audio Transcript&nbsp;&nbsp;<i class=\"ri-music-fill\"></i></button>" +
+            "</div>";
+        }
+      }
+      logger_element.innerHTML = logger_element.innerHTML + script_content;
+    }
+
+    $(document).ready(function () {
+
+      re_initialize_timeline();
+
+      document.getElementById("log_section").style.display = "none";
+      document.getElementById("rewrite_section").style.display = "none";
+
+      initiate_socket_connection();
+
+      submit_button.onclick = function () {
+        let input_data = input_story.value;
+        if (input_data != "") {
+          story = input_data;
+          document.getElementById('input_section').style.display = "none";
+          $("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
+          call_phase_1_step_1();
+        } else {
+          window.alert("No Input Data!...");
+        }
+      }
+
+      // Code to fetch a sample story on Clicking Fetch Button
+      $("#fetch_input_story").click(function () {
+        $.ajax({
+          url: "story/story01.txt",
+          success: function (result) {
+            $("#input_story").html(result);
+          }
+        });
+      });
+
+    });
+
+    function initiate_socket_connection() {
+
+      // Creating Socket Instance
+      const socket = io();
+
+      // Connecting To the Backend Server
+      socket.on("connect", () => {
+
+        // Informing The Server that the client is ready
+        socket.emit("client-ready", "");
+
+        call_phase_1_step_1 = function () {
+          timeline_label[0].classList.remove("--is-pending");
+          timeline_label[0].classList.add("--is-inprogress");
+          timeline_label[0]._tippy.setContent("In Progress");
+          socket.emit("client-to-server", {
+            "phase": 1,
+            "procedureNo": 0,
+            "input": story
+          });
+        }
+
+        call_phase_2_step_1 = function () {
+          socket.emit("client-to-server", {
+            "phase": 2,
+            "procedureNo": 0,
+            "input": story_list
+          });
+        }
+
+        call_phase_2_step_2 = function () {
+          socket.emit("client-to-server", {
+            "phase": 2,
+            "procedureNo": 1,
+            "input": current_plotwords
+          });
+        }
+
+        call_phase_3_step_1 = function () {
+          timeline_content[3].innerHTML = "";
+          socket.emit("client-to-server", {
+            "phase": 3,
+            "procedureNo": 0,
+            "input": story_list
+          });
+        }
+
+      });
+
+      socket.on("sub-servers-and-clients-status", function (data) {
+        active_clients = data.clients;
+        no_of_p1_servers = data.P1_instances;
+        no_of_p2_servers = data.P2_instances;
+        no_of_p3_servers = data.P3_instances;
+        console.log("Active Connections : " + active_clients + ", " + no_of_p1_servers + ", " + no_of_p2_servers +
+          ", " + no_of_p3_servers);
+      });
+
+      socket.on("server-to-client", function (data) {
+
+        if (data.error == true) {
+          window.alert("ERROR : " + data.errormsg);
+          return;
+        }
+
+        if (data.phase == 1 && data.status == "STARTED") {
+          current_phase = 1;
+          current_data_server = 1;
+          timeline_label[0].classList.remove("--is-inprogress");
+          timeline_label[0].classList.add("--is-completed");
+          timeline_label[1].classList.remove("--is-pending");
+          timeline_label[1].classList.add("--is-inprogress");
+          timeline_label[0]._tippy.setContent("Completed");
+          timeline_label[1]._tippy.setContent("In Progress");
+          logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Started</b>";
+          timeline_content[0].innerHTML = "Input Received at Server";
+        } else if (data.phase == 1 && data.status == "COMPLETED") {
+          current_data_server = 0;
+          timeline_label[1].classList.remove("--is-inprogress");
+          timeline_label[1].classList.add("--is-completed");
+          timeline_label[1]._tippy.setContent("Completed");
+          story_list = data.output;
+          logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 1 Completed</b><br/>" + JSON
+            .stringify(data);
+          write_screenplay(1);
+          timeline_content[1].innerHTML = script_content;
+          call_phase_2_step_1();
+        } else if (data.phase == 2 && data.procedureNo == 0 && data.status == "STARTED") {
+          current_phase = 2;
+          current_data_server = 2;
+          timeline_label[2].classList.remove("--is-pending");
+          timeline_label[2].classList.add("--is-inprogress");
+          timeline_label[2]._tippy.setContent("In Progress");
+          logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.1 Started</b>";
+        } else if (data.phase == 2 && data.procedureNo == 0 && data.status == "COMPLETED") {
+          current_data_server = 0;
+          story_list = data.output;
+          plot_index_list = []
+          current_plotwords = []
+          for (i = 0; i < story_list.length; ++i) {
+            if (story_list[i][1] == "PLOT") {
+              plot_index_list.push(i);
+              tmp = []
+              tmp.push(i)
+              tmp.push(story_list[i][2])
+              current_plotwords.push(tmp);
+            }
+          }
+          logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.1 Completed</b><br/>" + JSON
+            .stringify(data);
+          call_phase_2_step_2();
+        } else if (data.phase == 2 && data.procedureNo == 1 && data.status == "STARTED") {
+          current_phase = 2;
+          current_data_server = 2;
+          if (rewrite_flag == true) {
+            //rewrite_progress.innerHTML = "Started Creating New Plot Please Wait !.....";
+            //document.getElementsByTagName("body")[0].classList.add("loader");
+            $("#rewrite_section").addClass('loader');
+            $("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
+          }
+          logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Started</b>";
+        } else if (data.phase == 2 && data.procedureNo == 1 && data.status == "COMPLETED") {
+          if (current_data_server == 2)
+            current_data_server = 0;
+          if (rewrite_flag == true) {
+            story_list[data.output[0][0]][3].push(data.output[0][1]);
+            add_radio_buttons_to_plot_rewrite_dashboard(data.output[0][0]);
+            //rewrite_progress.innerHTML = "New Plot Generated !.....";
+            //rewrite_progress.classList.remove("loader");
+            $("#rewrite_section").removeClass('loader');
+            rewrite_flag = false;
+            $("#rewrite_section").get(0).scrollIntoView({behavior: "smooth"});
+          } else {
+            timeline_label[2].classList.remove("--is-inprogress");
+            timeline_label[2].classList.add("--is-completed");
+            timeline_label[2]._tippy.setContent("Completed");
+            for (i = 0; i < data.output.length; ++i) {
+              if (data.output[i][1] != "") {
+                story_list[data.output[i][0]][0] = data.output[i][1];
+                story_list[data.output[i][0]][3].push(data.output[i][1]);
+              }
+            }
+            logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Completed</b><br/>" + JSON
+              .stringify(data);
+            logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 2.2 Completed StoryList</b><br/>" +
+              JSON.stringify(story_list);
+            write_screenplay(2);
+            timeline_content[2].innerHTML = script_content;
+            tippy('.editbuttonclass',{ content: "rewrite this plot" });
+          }
+        } else if (data.phase == 3 && data.status == "STARTED") {
+          current_phase = 3;
+          timeline_label[3].classList.remove("--is-pending");
+          timeline_label[3].classList.add("--is-inprogress");
+          timeline_label[3]._tippy.setContent("In Progress");
+          current_data_server = 3;
+          logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Started</b>";
+        } else if (data.phase == 3 && data.status == "COMPLETED") {
+          current_data_server = 0;
+          timeline_label[3].classList.remove("--is-inprogress");
+          timeline_label[3].classList.add("--is-completed");
+          timeline_label[3]._tippy.setContent("Completed");
+          audio_file_names = data.output;
+          logger_element.innerHTML = logger_element.innerHTML + "<br/><b>Phase 3 Completed</b>";
+          write_screenplay(3);
+          timeline_content[3].innerHTML = script_content;
+        }
+
+      });
+
+    }
+  </script>
+
+</body>
+
+</html>

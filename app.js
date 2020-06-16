@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieSession = require('cookie-session');
 
 var indexRouter = require('./routes/index');
+var demoRouter = require('./routes/demo');
 var implementationRouter = require('./routes/implementaion');
 
 var app = express();
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/demo',express.static(path.join(__dirname, 'public')));
 app.use('/implementation',express.static(path.join(__dirname, 'public')));
 
 // configuring session
@@ -29,6 +31,7 @@ var session = cookieSession({
 app.use(session);
 
 app.use('/', indexRouter);
+app.use('/demo', demoRouter);
 app.use('/implementation', implementationRouter);
 
 // catch 404 and forward to error handler
